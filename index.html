@@ -354,5 +354,91 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
+<!-- =========================
+     نافذة الدعم
+========================= -->
+
+<div class="modal" id="supportModal">
+  <div class="modal-content support-modal">
+
+    <button
+      class="modal-close"
+      onclick="closeSupport()"
+      type="button"
+    >
+      ×
+    </button>
+
+    <div class="support-header">
+      <div class="support-icon">💬</div>
+
+      <h2>مركز الدعم</h2>
+
+      <p>
+        أهلاً بك في سوقي 👋
+        <br>
+        إذا تحتاج مساعدة، تواصل معنا مباشرة.
+      </p>
+    </div>
+
+    <div class="support-options">
+
+      <a
+        class="support-option"
+        href="https://wa.me/9647839343073"
+        target="_blank"
+      >
+        <span>🟢</span>
+        <div>
+          <strong>الدعم عبر واتساب</strong>
+          <small>07839343073</small>
+        </div>
+      </a>
+
+      <a
+        class="support-option"
+        href="mailto:11akibs@gmail.com"
+      >
+        <span>📧</span>
+        <div>
+          <strong>البريد الإلكتروني</strong>
+          <small>11akibs@gmail.com</small>
+        </div>
+      </a>
+
+      <a
+        class="support-option"
+        href="tel:07839343073"
+      >
+        <span>📞</span>
+        <div>
+          <strong>اتصل بنا</strong>
+          <small>07839343073</small>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="support-message">
+      <strong>أوقات الدعم</strong>
+      <p>
+        نحن نساعدك بخصوص الطلبات، المنتجات والتوصيل.
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<!-- زر الدعم العائم -->
+
+<button
+  class="support-floating"
+  onclick="openSupport()"
+  type="button"
+  aria-label="الدعم"
+>
+  💬
+</button>
+
 </body>
 </html>

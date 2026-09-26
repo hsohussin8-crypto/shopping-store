@@ -690,7 +690,149 @@ footer {
     height: 200px;
     font-size: 70px;
   }
+/* =========================
+   مركز الدعم
+========================= */
 
+.support-modal {
+  max-width: 520px;
+  text-align: right;
+}
+
+.support-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.support-icon {
+  width: 70px;
+  height: 70px;
+  margin: 0 auto 15px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  background: linear-gradient(135deg, #6d4aff, #8f72ff);
+  box-shadow: 0 10px 30px rgba(109, 74, 255, 0.25);
+}
+
+.support-header h2 {
+  margin: 0 0 8px;
+  font-size: 25px;
+}
+
+.support-header p {
+  margin: 0;
+  line-height: 1.8;
+  opacity: 0.7;
+}
+
+.support-options {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.support-option {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 16px;
+  border-radius: 16px;
+  text-decoration: none;
+  color: inherit;
+  background: rgba(109, 74, 255, 0.07);
+  border: 1px solid rgba(109, 74, 255, 0.12);
+  transition: 0.2s ease;
+}
+
+.support-option:hover {
+  transform: translateY(-2px);
+  background: rgba(109, 74, 255, 0.12);
+}
+
+.support-option > span {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: white;
+  font-size: 24px;
+}
+
+.support-option div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.support-option strong {
+  font-size: 16px;
+}
+
+.support-option small {
+  opacity: 0.65;
+  direction: ltr;
+  text-align: right;
+}
+
+.support-message {
+  margin-top: 18px;
+  padding: 15px;
+  border-radius: 14px;
+  background: #f6f6f8;
+  text-align: center;
+}
+
+.support-message p {
+  margin: 7px 0 0;
+  font-size: 14px;
+  opacity: 0.7;
+  line-height: 1.7;
+}
+
+/* زر الدعم العائم */
+
+.support-floating {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 58px;
+  height: 58px;
+  border: 0;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6d4aff, #8f72ff);
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease;
+}
+
+.support-floating:hover {
+  transform: scale(1.08);
+}
+
+@media (max-width: 600px) {
+
+  .support-modal {
+    width: calc(100% - 25px);
+    margin: 12px auto;
+  }
+
+  .support-floating {
+    right: 15px;
+    bottom: 15px;
+    width: 54px;
+    height: 54px;
+  }
+
+}
   .products-grid {
     grid-template-columns: 1fr;
   }
@@ -708,3 +850,4 @@ footer {
   }
 
 }
+

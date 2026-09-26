@@ -3,48 +3,69 @@ name: Build Android APK
 on:
   workflow_dispatch:
   push:
-    branches: ["main"]
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      ANDROID_HOME: /usr/local/lib/android/sdk
-
     steps:
-      - name: Get project
+
+      # ==========================================
+      # تحميل المشروع
+      # ==========================================
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Java
-        uses: actions/setup-java@v5
+      # ==========================================
+      # إعداد Java
+      # ==========================================
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "17"
+          java-version: '17'
 
-      - name: Setup Android SDK
-        run: |
-          echo "$ANDROID_HOME/cmdline-tools/latest/bin" >> $GITHUB_PATH
-          echo "$ANDROID_HOME/platform-tools" >> $GITHUB_PATH
-          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses || true
-          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-35" "build-tools;35.0.0"
-
-      - name: Prepare store files
+      # ==========================================
+      # تجهيز ملفات التطبيق
+      # ==========================================
+      - name: Prepare Android Assets
         run: |
           mkdir -p app/src/main/assets
-          mkdir -p app/src/main/res/drawable
-          cp index.html login.html styles.css app.js app/src/main/assets/
-          cp icon-192-1.png app/src/main/res/drawable/icon.png
 
-      - name: Install Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: "8.13"
+          cp index.html app/src/main/assets/
+          cp login.html app/src/main/assets/
+          cp styles.css app/src/main/assets/
+          cp app.js app/src/main/assets/
 
-      - name: Build APK
-        run: gradle assembleDebug
+          # ملفات لوحة الإدارة
+          cp admin.html app/src/main/assets/
+          cp admin.css app/src/main/assets/
+          cp admin.js app/src/main/assets/
 
-      - name: Save APK
+          # manifest إذا كان موجوداً
+          if [ -f manifest.json ]; then
+            cp manifest.json app/src/main/assets/
+          fi
+
+          echo "================================"
+          echo "Assets:"
+          ls -la app/src/main/assets/
+          echo "================================"
+
+      # ==========================================
+      # بناء APK
+      # ==========================================
+      - name: Build Debug APK
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      # ==========================================
+      # رفع APK
+      # ==========================================
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: metjari-apk

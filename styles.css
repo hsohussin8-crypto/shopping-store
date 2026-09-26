@@ -851,3 +851,143 @@ footer {
 
 }
 
+/* =========================
+   حساب الزبون
+========================= */
+
+.account-content {
+  max-width: 480px;
+  width: 92%;
+}
+
+.account-content h2 {
+  margin-top: 5px;
+  margin-bottom: 8px;
+}
+
+.account-content p {
+  color: #777;
+  line-height: 1.7;
+}
+
+.account-content input,
+.account-content select,
+.account-content textarea {
+  width: 100%;
+  padding: 13px;
+  margin: 7px 0;
+  border: 1px solid #ddd;
+  border-radius: 11px;
+  font-family: inherit;
+  font-size: 15px;
+  outline: none;
+}
+
+.account-content input:focus,
+.account-content select:focus,
+.account-content textarea:focus {
+  border-color: #6d4aff;
+}
+
+.account-content .checkout-button {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.secondary-account-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px;
+  border: 1px solid #6d4aff;
+  background: white;
+  color: #6d4aff;
+  border-radius: 11px;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.secondary-account-btn:hover {
+  background: #f4f1ff;
+}
+
+.account-btn {
+  border: 0;
+  background: #f1efff;
+  color: #5b3ee4;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.account-btn:hover {
+  background: #e5e0ff;
+}
+
+.account-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.account-actions button {
+  width: 100%;
+  padding: 13px;
+  border: 0;
+  border-radius: 11px;
+  background: #f3f3f7;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  text-align: right;
+}
+
+.account-actions button:hover {
+  background: #e8e5f5;
+}
+
+#customerLoginMessage,
+#customerRegisterMessage {
+  min-height: 24px;
+  margin: 8px 0;
+  font-size: 14px;
+}
+
+#customerAccountDetails {
+  margin-top: 18px;
+  padding: 15px;
+  background: #f7f7fa;
+  border-radius: 12px;
+  line-height: 2;
+}
+
+#customerProfileName {
+  background: #f7f5ff;
+  padding: 12px;
+  border-radius: 11px;
+  color: #5b3ee4;
+}
+
+@media (max-width: 700px) {
+
+  .header-content {
+    flex-wrap: wrap;
+  }
+
+  .account-btn {
+    order: 3;
+  }
+
+  .cart-button {
+    order: 4;
+  }
+
+  .search-box {
+    order: 2;
+    width: 100%;
+  }
+
+}

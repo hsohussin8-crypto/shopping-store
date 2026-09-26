@@ -24,17 +24,27 @@ public class MainActivity extends Activity {
         settings.setAllowFileAccess(true);
         settings.setAllowContentAccess(true);
 
-        webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(
+            new WebViewClient()
+        );
 
-        webView.loadUrl("file:///android_asset/index.html");
+        // يبدأ التطبيق من شاشة تسجيل الدخول
+        webView.loadUrl(
+            "file:///android_asset/login.html"
+        );
     }
 
     @Override
     public void onBackPressed() {
+
         if (webView.canGoBack()) {
+
             webView.goBack();
+
         } else {
+
             super.onBackPressed();
+
         }
     }
 }

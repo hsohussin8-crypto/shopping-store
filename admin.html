@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>لوحة الإدارة - سوقي</title>
+
+  <title>لوحة الإدارة - متجري</title>
+
   <link rel="stylesheet" href="admin.css">
 </head>
 
 <body>
 
-  <!-- شاشة تسجيل الدخول -->
+  <!-- =========================
+       تسجيل دخول الأدمن
+  ========================== -->
+
   <section id="loginSection" class="login-section">
+
     <div class="login-box">
+
       <div class="login-logo">🛒</div>
 
-      <h1>لوحة إدارة سوقي</h1>
+      <h1>لوحة إدارة متجري</h1>
+
       <p>تسجيل دخول المدير</p>
 
       <input
@@ -31,33 +40,54 @@
         autocomplete="current-password"
       >
 
-      <button onclick="login()">دخول</button>
+      <button onclick="login()">
+        دخول
+      </button>
 
       <p id="loginMessage" class="message"></p>
 
-      <a href="index.html">← العودة إلى المتجر</a>
+      <a href="index.html">
+        ← العودة إلى المتجر
+      </a>
+
     </div>
+
   </section>
 
 
-  <!-- لوحة الإدارة -->
+  <!-- =========================
+       لوحة الإدارة
+  ========================== -->
+
   <section id="adminSection" class="admin-section hidden">
 
     <header class="admin-header">
+
       <div>
-        <h1>🛒 لوحة الإدارة</h1>
+
+        <h1>🛒 لوحة إدارة متجري</h1>
+
         <span id="adminEmail"></span>
+
       </div>
 
-      <button class="logout-btn" onclick="logout()">
+      <button
+        class="logout-btn"
+        onclick="logout()"
+      >
         تسجيل الخروج
       </button>
+
     </header>
 
 
     <main class="admin-container">
 
-      <!-- الإحصائيات -->
+
+      <!-- =========================
+           الإحصائيات
+      ========================== -->
+
       <div class="stats">
 
         <div class="stat-card">
@@ -81,94 +111,336 @@
       </div>
 
 
-      <!-- المنتجات -->
+      <!-- =========================
+           تخصيص المتجر
+      ========================== -->
+
       <section class="panel">
 
         <div class="panel-title">
-          <h2>📦 المنتجات</h2>
+
+          <h2>
+            🎨 تخصيص شكل المتجر
+          </h2>
+
+        </div>
+
+        <div class="form-box">
+
+          <label>
+            طريقة عرض المنتجات
+          </label>
+
+          <select id="productLayout">
+
+            <option value="grid">
+              🟦 شبكة
+            </option>
+
+            <option value="list">
+              📋 قائمة
+            </option>
+
+          </select>
+
+
+          <label>
+            عدد المنتجات في الصف
+          </label>
+
+          <select id="productsPerRow">
+
+            <option value="1">
+              1 منتج
+            </option>
+
+            <option value="2">
+              2 منتجات
+            </option>
+
+            <option value="3">
+              3 منتجات
+            </option>
+
+            <option value="4">
+              4 منتجات
+            </option>
+
+          </select>
+
+
+          <label class="check-row">
+
+            <input
+              type="checkbox"
+              id="showCategories"
+            >
+
+            <span>
+              إظهار الأقسام في المتجر
+            </span>
+
+          </label>
+
+
+          <label class="check-row">
+
+            <input
+              type="checkbox"
+              id="showFeatured"
+            >
+
+            <span>
+              إظهار المنتجات المميزة
+            </span>
+
+          </label>
+
+
+          <button
+            onclick="saveStoreSettings()"
+          >
+            💾 حفظ إعدادات المتجر
+          </button>
+
+          <p id="settingsMessage"></p>
+
+        </div>
+
+      </section>
+
+
+      <!-- =========================
+           المنتجات
+      ========================== -->
+
+      <section class="panel">
+
+        <div class="panel-title">
+
+          <h2>
+            📦 المنتجات
+          </h2>
 
           <button onclick="openProductForm()">
             ➕ إضافة منتج
           </button>
+
         </div>
 
-        <div id="productForm" class="form-box hidden">
 
-          <h3 id="productFormTitle">إضافة منتج</h3>
+        <!-- نموذج المنتج -->
 
-          <input type="hidden" id="productId">
+        <div
+          id="productForm"
+          class="form-box hidden"
+        >
 
-          <label>اسم المنتج</label>
-          <input id="productName" type="text" placeholder="مثال: ساعة كلاسيكية">
+          <h3 id="productFormTitle">
+            إضافة منتج
+          </h3>
 
-          <label>السعر</label>
-          <input id="productPrice" type="number" placeholder="85000">
+          <input
+            type="hidden"
+            id="productId"
+          >
 
-          <label>المخزون</label>
-          <input id="productStock" type="number" placeholder="10">
 
-          <label>القسم</label>
+          <label>
+            اسم المنتج
+          </label>
+
+          <input
+            id="productName"
+            type="text"
+            placeholder="مثال: ساعة كلاسيكية"
+          >
+
+
+          <label>
+            السعر
+          </label>
+
+          <input
+            id="productPrice"
+            type="number"
+            placeholder="85000"
+          >
+
+
+          <label>
+            المخزون
+          </label>
+
+          <input
+            id="productStock"
+            type="number"
+            placeholder="10"
+          >
+
+
+          <label>
+            القسم
+          </label>
+
           <select id="productCategory"></select>
 
-          <label>رابط صورة المنتج</label>
+
+          <label>
+            رابط صورة المنتج
+          </label>
+
           <input
             id="productImage"
             type="url"
             placeholder="https://example.com/image.jpg"
           >
 
-          <label>الوصف</label>
+
+          <label>
+            الوصف
+          </label>
+
           <textarea
             id="productDescription"
             placeholder="وصف المنتج..."
           ></textarea>
 
+
+          <label>
+            ترتيب المنتج
+          </label>
+
+          <input
+            id="productSortOrder"
+            type="number"
+            value="0"
+            placeholder="0"
+          >
+
+
+          <label class="check-row">
+
+            <input
+              type="checkbox"
+              id="productFeatured"
+            >
+
+            <span>
+              ⭐ منتج مميز
+            </span>
+
+          </label>
+
+
+          <label class="check-row">
+
+            <input
+              type="checkbox"
+              id="productActive"
+              checked
+            >
+
+            <span>
+              👁️ إظهار المنتج
+            </span>
+
+          </label>
+
+
           <div class="form-buttons">
-            <button onclick="saveProduct()">💾 حفظ</button>
-            <button class="cancel-btn" onclick="closeProductForm()">
+
+            <button onclick="saveProduct()">
+              💾 حفظ
+            </button>
+
+            <button
+              class="cancel-btn"
+              onclick="closeProductForm()"
+            >
               إلغاء
             </button>
+
           </div>
 
         </div>
 
-        <div id="productsList" class="items-list">
+
+        <div
+          id="productsList"
+          class="items-list"
+        >
           جاري تحميل المنتجات...
         </div>
 
       </section>
 
 
-      <!-- الأقسام -->
+      <!-- =========================
+           الأقسام
+      ========================== -->
+
       <section class="panel">
 
         <div class="panel-title">
-          <h2>🗂️ الأقسام</h2>
+
+          <h2>
+            🗂️ الأقسام
+          </h2>
 
           <button onclick="addCategory()">
             ➕ إضافة قسم
           </button>
+
         </div>
 
-        <div id="categoriesList" class="items-list">
+
+        <div class="form-box">
+
+          <p>
+            🔢 الرقم الأصغر يظهر أولاً في المتجر.
+          </p>
+
+          <p>
+            🖼️ يمكنك إضافة صورة للقسم وتحديد ترتيبه.
+          </p>
+
+        </div>
+
+
+        <div
+          id="categoriesList"
+          class="items-list"
+        >
           جاري تحميل الأقسام...
         </div>
 
       </section>
 
 
-      <!-- الطلبات -->
+      <!-- =========================
+           الطلبات
+      ========================== -->
+
       <section class="panel">
 
         <div class="panel-title">
-          <h2>🧾 الطلبات</h2>
+
+          <h2>
+            🧾 الطلبات
+          </h2>
 
           <button onclick="loadOrders()">
             🔄 تحديث
           </button>
+
         </div>
 
-        <div id="ordersList" class="items-list">
+
+        <div
+          id="ordersList"
+          class="items-list"
+        >
           جاري تحميل الطلبات...
         </div>
 
@@ -180,9 +452,11 @@
 
 
   <!-- Supabase -->
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <script src="admin.js"></script>
 
 </body>
+
 </html>

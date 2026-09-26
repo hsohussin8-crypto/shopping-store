@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -30,7 +31,36 @@ jobs:
         run: |
           set -e
 
+          echo "=============================="
+          echo "Checking required files..."
+          echo "=============================="
+
+          required_files=(
+            "index.html"
+            "login.html"
+            "styles.css"
+            "app.js"
+            "admin.html"
+            "admin.css"
+            "admin.js"
+          )
+
+          for file in "${required_files[@]}"; do
+            if [ ! -f "$file" ]; then
+              echo "ERROR: Missing file: $file"
+              exit 1
+            fi
+
+            echo "OK: $file"
+          done
+
+          echo "=============================="
+          echo "Creating Android assets..."
+          echo "=============================="
+
           mkdir -p app/src/main/assets
+
+          rm -rf app/src/main/assets/*
 
           cp index.html app/src/main/assets/
           cp login.html app/src/main/assets/
@@ -43,17 +73,48 @@ jobs:
 
           if [ -f manifest.json ]; then
             cp manifest.json app/src/main/assets/
+            echo "OK: manifest.json"
           fi
 
           echo "=============================="
-          echo "Assets:"
-          ls -la app/src/main/assets/
+          echo "Android Assets:"
+          echo "=============================="
+
+          ls -lah app/src/main/assets/
+
           echo "=============================="
 
       - name: Build Debug APK
+        shell: bash
         run: |
+          set -e
+
+          echo "=============================="
+          echo "Gradle Version"
+          echo "=============================="
+
           gradle --version
+
+          echo "=============================="
+          echo "Building APK..."
+          echo "=============================="
+
           gradle assembleDebug --stacktrace
+
+      - name: Verify APK
+        shell: bash
+        run: |
+          set -e
+
+          APK="app/build/outputs/apk/debug/app-debug.apk"
+
+          if [ ! -f "$APK" ]; then
+            echo "ERROR: APK was not created."
+            exit 1
+          fi
+
+          echo "APK created successfully:"
+          ls -lh "$APK"
 
       - name: Upload APK
         uses: actions/upload-artifact@v4

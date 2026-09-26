@@ -11,27 +11,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
-      # ==========================================
-      # تحميل المشروع
-      # ==========================================
       - name: Checkout
         uses: actions/checkout@v4
 
-      # ==========================================
-      # إعداد Java
-      # ==========================================
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      # ==========================================
-      # تجهيز ملفات التطبيق
-      # ==========================================
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+
       - name: Prepare Android Assets
+        shell: bash
         run: |
+          set -e
+
           mkdir -p app/src/main/assets
 
           cp index.html app/src/main/assets/
@@ -39,32 +37,24 @@ jobs:
           cp styles.css app/src/main/assets/
           cp app.js app/src/main/assets/
 
-          # ملفات لوحة الإدارة
           cp admin.html app/src/main/assets/
           cp admin.css app/src/main/assets/
           cp admin.js app/src/main/assets/
 
-          # manifest إذا كان موجوداً
           if [ -f manifest.json ]; then
             cp manifest.json app/src/main/assets/
           fi
 
-          echo "================================"
+          echo "=============================="
           echo "Assets:"
           ls -la app/src/main/assets/
-          echo "================================"
+          echo "=============================="
 
-      # ==========================================
-      # بناء APK
-      # ==========================================
       - name: Build Debug APK
         run: |
-          chmod +x gradlew
-          ./gradlew assembleDebug
+          gradle --version
+          gradle assembleDebug --stacktrace
 
-      # ==========================================
-      # رفع APK
-      # ==========================================
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:

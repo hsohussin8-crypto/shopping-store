@@ -1,6 +1,6 @@
 // ============================================================
 // متجري - التطبيق الرئيسي
-// نسخة كاملة
+// نسخة كاملة + إعدادات لوحة الإدارة
 // ============================================================
 
 (function () {
@@ -67,7 +67,9 @@ const fallbackProducts = [
     description:
       "ساعة أنيقة بتصميم كلاسيكي مناسبة للاستخدام اليومي والمناسبات.",
     stock: null,
-    active: true
+    active: true,
+    sort_order: 0,
+    featured: false
   },
 
   {
@@ -80,7 +82,9 @@ const fallbackProducts = [
     description:
       "حذاء رياضي مريح وخفيف مناسب للمشي والرياضة.",
     stock: null,
-    active: true
+    active: true,
+    sort_order: 1,
+    featured: false
   },
 
   {
@@ -93,7 +97,9 @@ const fallbackProducts = [
     description:
       "سماعات لاسلكية بصوت واضح وتصميم عصري.",
     stock: null,
-    active: true
+    active: true,
+    sort_order: 2,
+    featured: false
   },
 
   {
@@ -106,7 +112,9 @@ const fallbackProducts = [
     description:
       "حقيبة جلد أنيقة وعملية للاستخدام اليومي.",
     stock: null,
-    active: true
+    active: true,
+    sort_order: 3,
+    featured: false
   },
 
   {
@@ -119,7 +127,9 @@ const fallbackProducts = [
     description:
       "نظارة شمسية بتصميم عصري وأنيق.",
     stock: null,
-    active: true
+    active: true,
+    sort_order: 4,
+    featured: false
   },
 
   {
@@ -132,7 +142,9 @@ const fallbackProducts = [
     description:
       "كاميرا صغيرة للتصوير اليومي وصناعة المحتوى.",
     stock: null,
-    active: true
+    active: true,
+    sort_order: 5,
+    featured: false
   },
 
   {
@@ -145,7 +157,9 @@ const fallbackProducts = [
     description:
       "عطر فاخر برائحة مميزة وثابتة.",
     stock: null,
-    active: true
+    active: true,
+    sort_order: 6,
+    featured: false
   },
 
   {
@@ -158,12 +172,40 @@ const fallbackProducts = [
     description:
       "قميص أنيق ومريح مناسب للإطلالات اليومية.",
     stock: null,
-    active: true
+    active: true,
+    sort_order: 7,
+    featured: false
   }
 
 ];
 
 let products = [...fallbackProducts];
+
+let categories = [];
+
+// ============================================================
+// إعدادات المتجر
+// ============================================================
+
+let storeSettings = {
+
+  product_layout: "grid",
+
+  products_layout: "grid",
+
+  products_per_row: 2,
+
+  products_per_row_mobile: 2,
+
+  products_per_row_desktop: 4,
+
+  category_layout: "horizontal",
+
+  show_categories: true,
+
+  show_featured: true
+
+};
 
 // ============================================================
 // حالة التطبيق
@@ -259,6 +301,148 @@ function applyStoreName() {
       }
 
     });
+
+}
+
+// ============================================================
+// إعدادات المتجر
+// ============================================================
+
+async function loadStoreSettings() {
+
+  if (!supabaseClient) {
+    return;
+  }
+
+  try {
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("store_settings")
+        .select("*")
+        .eq("id", 1)
+        .maybeSingle();
+
+    if (error) {
+
+      console.error(
+        "Store settings error:",
+        error
+      );
+
+      return;
+
+    }
+
+    if (data) {
+
+      storeSettings = {
+        ...storeSettings,
+        ...data
+      };
+
+    }
+
+    applyStoreSettings();
+
+  } catch (error) {
+
+    console.error(
+      "Store settings exception:",
+      error
+    );
+
+  }
+
+}
+
+function applyStoreSettings() {
+
+  const grid =
+    $("#productsGrid");
+
+  if (!grid) {
+    return;
+  }
+
+  const layout =
+    storeSettings.products_layout ||
+    storeSettings.product_layout ||
+    "grid";
+
+  const mobileColumns =
+    Number(
+      storeSettings.products_per_row_mobile
+    ) ||
+    2;
+
+  const desktopColumns =
+    Number(
+      storeSettings.products_per_row_desktop
+    ) ||
+    Number(
+      storeSettings.products_per_row
+    ) ||
+    4;
+
+  grid.dataset.layout =
+    layout;
+
+  grid.style.setProperty(
+    "--products-mobile-columns",
+    mobileColumns
+  );
+
+  grid.style.setProperty(
+    "--products-desktop-columns",
+    desktopColumns
+  );
+
+  if (layout === "list") {
+
+    grid.classList.add(
+      "products-list-view"
+    );
+
+  } else {
+
+    grid.classList.remove(
+      "products-list-view"
+    );
+
+  }
+
+  applyCategoryVisibility();
+
+}
+
+function applyCategoryVisibility() {
+
+  const categoriesSection =
+    document.querySelector(
+      "#categoriesSection"
+    );
+
+  if (!categoriesSection) {
+    return;
+  }
+
+  if (
+    storeSettings.show_categories === false
+  ) {
+
+    categoriesSection.style.display =
+      "none";
+
+  } else {
+
+    categoriesSection.style.display =
+      "";
+
+  }
 
 }
 
@@ -670,6 +854,149 @@ function renderCartItems() {
 }
 
 // ============================================================
+// الأقسام
+// ============================================================
+
+async function loadCategoriesFromSupabase() {
+
+  if (!supabaseClient) {
+    return false;
+  }
+
+  try {
+
+    const {
+      data,
+      error
+    } =
+      await supabaseClient
+        .from("categories")
+        .select(
+          "id,name,image_url,active,sort_order,display_style"
+        )
+        .eq(
+          "active",
+          true
+        )
+        .order(
+          "sort_order",
+          {
+            ascending: true
+          }
+        )
+        .order(
+          "id",
+          {
+            ascending: true
+          }
+        );
+
+    if (error) {
+
+      console.error(
+        "Categories loading error:",
+        error
+      );
+
+      return false;
+
+    }
+
+    categories =
+      Array.isArray(data)
+        ? data
+        : [];
+
+    renderCategories();
+
+    return true;
+
+  } catch (error) {
+
+    console.error(
+      "Categories exception:",
+      error
+    );
+
+    return false;
+
+  }
+
+}
+
+function renderCategories() {
+
+  const container =
+    document.querySelector(
+      "#categoriesGrid"
+    );
+
+  if (!container) {
+    return;
+  }
+
+  const layout =
+    storeSettings.category_layout ||
+    "horizontal";
+
+  container.dataset.layout =
+    layout;
+
+  const buttons = [
+
+    `
+      <button
+        class="category active"
+        type="button"
+        onclick="filterCategory('الكل', this)"
+      >
+        <span>🛍️</span>
+        <span>الكل</span>
+      </button>
+    `
+
+  ];
+
+  categories.forEach(category => {
+
+    buttons.push(`
+      <button
+        class="category"
+        type="button"
+        onclick="filterCategory('${escapeHtml(category.name)}', this)"
+      >
+
+        ${
+          category.image_url
+            ? `
+              <img
+                src="${escapeHtml(category.image_url)}"
+                alt="${escapeHtml(category.name)}"
+                onerror="this.style.display='none'"
+              >
+            `
+            : `
+              <span>📦</span>
+            `
+        }
+
+        <span>
+          ${escapeHtml(category.name)}
+        </span>
+
+      </button>
+    `);
+
+  });
+
+  container.innerHTML =
+    buttons.join("");
+
+  applyCategoryVisibility();
+
+}
+
+// ============================================================
 // البحث والتصنيف
 // ============================================================
 
@@ -810,6 +1137,27 @@ function resetProductFilters() {
 }
 
 // ============================================================
+// المنتجات المميزة
+// ============================================================
+
+function getFeaturedProducts() {
+
+  if (
+    storeSettings.show_featured === false
+  ) {
+
+    return [];
+
+  }
+
+  return products.filter(
+    product =>
+      product.featured === true
+  );
+
+}
+
+// ============================================================
 // عرض المنتجات
 // ============================================================
 
@@ -823,6 +1171,8 @@ function displayProducts(
   if (!grid) {
     return;
   }
+
+  applyStoreSettings();
 
   if (!list.length) {
 
@@ -868,6 +1218,16 @@ function displayProducts(
 
         return `
           <article class="product-card">
+
+            ${
+              product.featured
+                ? `
+                  <div class="featured-badge">
+                    ⭐ مميز
+                  </div>
+                `
+                : ""
+            }
 
             <div
               class="product-image"
@@ -2172,7 +2532,6 @@ async function customerLogout() {
     "pendingCustomerProfile"
   );
 
-  // العودة إلى شاشة الدخول الخارجية
   window.location.replace(
     "./login.html"
   );
@@ -2994,11 +3353,18 @@ async function loadProductsFromSupabase() {
       await supabaseClient
         .from("products")
         .select(
-          "id,name,description,price,image_url,stock,active,categories(name)"
+          "id,name,description,price,image_url,stock,active,sort_order,featured,categories(name)"
         )
         .eq(
           "active",
           true
+        )
+        .order(
+          "sort_order",
+          {
+            ascending:
+              true
+          }
         )
         .order(
           "id",
@@ -3067,10 +3433,39 @@ async function loadProductsFromSupabase() {
               : null,
 
           active:
-            item.active !== false
+            item.active !== false,
+
+          sort_order:
+            Number(item.sort_order) || 0,
+
+          featured:
+            item.featured === true
 
         })
       );
+
+    liveProducts.sort(
+      (a, b) => {
+
+        if (
+          a.sort_order !==
+          b.sort_order
+        ) {
+
+          return (
+            a.sort_order -
+            b.sort_order
+          );
+
+        }
+
+        return (
+          a.id -
+          b.id
+        );
+
+      }
+    );
 
     if (
       liveProducts.length
@@ -3169,7 +3564,13 @@ document.addEventListener(
 
     await restoreCustomerSession();
 
+    await loadStoreSettings();
+
+    await loadCategoriesFromSupabase();
+
     await loadProductsFromSupabase();
+
+    applyStoreSettings();
 
     document.addEventListener(
       "keydown",

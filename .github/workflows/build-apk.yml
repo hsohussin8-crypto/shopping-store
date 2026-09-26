@@ -33,7 +33,7 @@ jobs:
         run: |
           mkdir -p app/src/main/assets
           mkdir -p app/src/main/res/drawable
-          cp index.html styles.css app.js app/src/main/assets/
+          cp index.html login.html styles.css app.js app/src/main/assets/
           cp icon-192-1.png app/src/main/res/drawable/icon.png
 
       - name: Install Gradle

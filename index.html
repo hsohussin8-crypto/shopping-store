@@ -3,20 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>سوقي | متجر إلكتروني</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
 
   <link rel="stylesheet" href="styles.css">
-<link rel="manifest" href="./manifest.json">
-<meta name="theme-color" content="#6d4aff">
+  <link rel="manifest" href="./manifest.json">
+
+  <meta name="theme-color" content="#6d4aff">
 </head>
 
 <body>
 
 <header class="header">
+
   <div class="container header-content">
 
     <a href="#" class="logo">
@@ -24,30 +31,54 @@
     </a>
 
     <div class="search-box">
+
       <input
         type="text"
         id="searchInput"
         placeholder="ابحث عن منتج..."
       >
-      <button onclick="searchProducts()">🔍</button>
+
+      <button onclick="searchProducts()">
+        🔍
+      </button>
+
     </div>
 
-    <button class="cart-button" onclick="openCart()">
+    <!-- حساب الزبون -->
+    <button
+      class="account-btn"
+      onclick="openAccount()"
+      type="button"
+    >
+      👤 حسابي
+    </button>
+
+    <!-- السلة -->
+    <button
+      class="cart-button"
+      onclick="openCart()"
+      type="button"
+    >
       🛒 السلة
       <b id="cartCount">0</b>
     </button>
 
   </div>
+
 </header>
 
 
 <main>
 
 <section class="hero">
+
   <div class="container hero-content">
 
     <div class="hero-text">
-      <span class="sale-badge">🔥 عروض خاصة</span>
+
+      <span class="sale-badge">
+        🔥 عروض خاصة
+      </span>
 
       <h1>
         كل اللي تحتاجه
@@ -66,6 +97,7 @@
       >
         تسوق الآن
       </button>
+
     </div>
 
     <div class="hero-image">
@@ -73,10 +105,12 @@
     </div>
 
   </div>
+
 </section>
 
 
 <section class="categories-section">
+
   <div class="container">
 
     <h2>التصنيفات</h2>
@@ -128,16 +162,27 @@
     </div>
 
   </div>
+
 </section>
 
 
-<section class="products-section" id="products">
+<section
+  class="products-section"
+  id="products"
+>
 
   <div class="container">
 
     <div class="section-title">
-      <span>اكتشف منتجاتنا</span>
-      <h2>منتجات مميزة</h2>
+
+      <span>
+        اكتشف منتجاتنا
+      </span>
+
+      <h2>
+        منتجات مميزة
+      </h2>
+
     </div>
 
     <div
@@ -152,12 +197,17 @@
 </main>
 
 
+<!-- الخلفية -->
 <div
   class="overlay"
   id="overlay"
   onclick="closeAll()"
 ></div>
 
+
+<!-- =========================
+     السلة
+========================= -->
 
 <aside
   class="cart-drawer"
@@ -166,9 +216,16 @@
 
   <div class="cart-header">
 
-    <h2>🛒 سلة المشتريات</h2>
+    <h2>
+      🛒 سلة المشتريات
+    </h2>
 
-    <button onclick="closeCart()">✕</button>
+    <button
+      onclick="closeCart()"
+      type="button"
+    >
+      ✕
+    </button>
 
   </div>
 
@@ -180,13 +237,21 @@
   <div class="cart-footer">
 
     <div class="cart-total">
-      <span>المجموع</span>
-      <strong id="cartTotal">0 د.ع</strong>
+
+      <span>
+        المجموع
+      </span>
+
+      <strong id="cartTotal">
+        0 د.ع
+      </strong>
+
     </div>
 
     <button
       class="checkout-button"
       onclick="openCheckout()"
+      type="button"
     >
       إتمام الطلب
     </button>
@@ -195,6 +260,10 @@
 
 </aside>
 
+
+<!-- =========================
+     تفاصيل المنتج
+========================= -->
 
 <div
   class="modal"
@@ -206,6 +275,7 @@
     <button
       class="close-modal"
       onclick="closeProductModal()"
+      type="button"
     >
       ✕
     </button>
@@ -217,6 +287,202 @@
 </div>
 
 
+<!-- =========================
+     تسجيل الدخول / حساب الزبون
+========================= -->
+
+<div
+  class="modal"
+  id="accountModal"
+>
+
+  <div class="modal-content account-content">
+
+    <button
+      class="close-modal"
+      onclick="closeAccount()"
+      type="button"
+    >
+      ✕
+    </button>
+
+
+    <!-- تسجيل الدخول -->
+
+    <div id="customerLogin">
+
+      <h2>
+        👤 تسجيل الدخول
+      </h2>
+
+      <p>
+        سجل دخولك حتى تتابع طلباتك وتحفظ بياناتك.
+      </p>
+
+      <input
+        type="email"
+        id="customerEmail"
+        placeholder="البريد الإلكتروني"
+        autocomplete="email"
+      >
+
+      <input
+        type="password"
+        id="customerPassword"
+        placeholder="كلمة المرور"
+        autocomplete="current-password"
+      >
+
+      <button
+        class="checkout-button"
+        onclick="customerLogin()"
+        type="button"
+      >
+        دخول
+      </button>
+
+      <p id="customerLoginMessage"></p>
+
+      <button
+        class="secondary-account-btn"
+        onclick="showRegister()"
+        type="button"
+      >
+        إنشاء حساب جديد
+      </button>
+
+    </div>
+
+
+    <!-- إنشاء حساب -->
+
+    <div
+      id="customerRegister"
+      style="display:none"
+    >
+
+      <h2>
+        📝 إنشاء حساب جديد
+      </h2>
+
+      <p>
+        أنشئ حسابك حتى تتابع طلباتك بسهولة.
+      </p>
+
+      <input
+        type="text"
+        id="registerName"
+        placeholder="الاسم الكامل"
+        autocomplete="name"
+      >
+
+      <input
+        type="email"
+        id="registerEmail"
+        placeholder="البريد الإلكتروني"
+        autocomplete="email"
+      >
+
+      <input
+        type="password"
+        id="registerPassword"
+        placeholder="كلمة المرور"
+        autocomplete="new-password"
+      >
+
+      <input
+        type="tel"
+        id="registerPhone"
+        placeholder="رقم الهاتف"
+        autocomplete="tel"
+      >
+
+      <input
+        type="text"
+        id="registerCity"
+        placeholder="المحافظة / المدينة"
+      >
+
+      <input
+        type="text"
+        id="registerAddress"
+        placeholder="العنوان بالتفصيل"
+      >
+
+      <button
+        class="checkout-button"
+        onclick="customerRegister()"
+        type="button"
+      >
+        إنشاء الحساب
+      </button>
+
+      <p id="customerRegisterMessage"></p>
+
+      <button
+        class="secondary-account-btn"
+        onclick="showLogin()"
+        type="button"
+      >
+        لدي حساب بالفعل
+      </button>
+
+    </div>
+
+
+    <!-- الحساب بعد تسجيل الدخول -->
+
+    <div
+      id="customerProfile"
+      style="display:none"
+    >
+
+      <h2>
+        👋 أهلاً بك
+      </h2>
+
+      <h3 id="customerProfileName"></h3>
+
+      <div class="account-actions">
+
+        <button
+          onclick="showCustomerOrders()"
+          type="button"
+        >
+          📦 طلباتي
+        </button>
+
+        <button
+          onclick="showCustomerData()"
+          type="button"
+        >
+          👤 بياناتي
+        </button>
+
+        <button
+          onclick="customerLogout()"
+          type="button"
+        >
+          🚪 تسجيل الخروج
+        </button>
+
+      </div>
+
+      <div
+        id="customerAccountDetails"
+      ></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- =========================
+     إتمام الطلب
+========================= -->
+
 <div
   class="modal"
   id="checkoutModal"
@@ -227,11 +493,14 @@
     <button
       class="close-modal"
       onclick="closeCheckout()"
+      type="button"
     >
       ✕
     </button>
 
-    <h2>إتمام الطلب</h2>
+    <h2>
+      إتمام الطلب
+    </h2>
 
     <p>
       أدخل معلومات التوصيل الخاصة بك
@@ -239,7 +508,9 @@
 
     <form id="checkoutForm">
 
-      <label>الاسم الكامل</label>
+      <label>
+        الاسم الكامل
+      </label>
 
       <input
         type="text"
@@ -248,7 +519,9 @@
         required
       >
 
-      <label>رقم الهاتف</label>
+      <label>
+        رقم الهاتف
+      </label>
 
       <input
         type="tel"
@@ -257,9 +530,14 @@
         required
       >
 
-      <label>المحافظة</label>
+      <label>
+        المحافظة
+      </label>
 
-      <select id="customerCity" required>
+      <select
+        id="customerCity"
+        required
+      >
 
         <option value="">
           اختر المحافظة
@@ -286,7 +564,9 @@
 
       </select>
 
-      <label>العنوان بالتفصيل</label>
+      <label>
+        العنوان بالتفصيل
+      </label>
 
       <textarea
         id="customerAddress"
@@ -308,57 +588,90 @@
 </div>
 
 
+<!-- =========================
+     رسالة
+========================= -->
+
 <div
   class="toast"
   id="toast"
 ></div>
 
 
+<!-- =========================
+     الفوتر
+========================= -->
+
 <footer>
 
   <div class="container footer-content">
 
     <div>
-      <h3>🛒 سوقي</h3>
+
+      <h3>
+        🛒 سوقي
+      </h3>
+
       <p>
         متجرك الإلكتروني البسيط والسريع.
       </p>
+
     </div>
 
-    <div>
-      <h4>روابط</h4>
-      <a href="#">الرئيسية</a>
-      <a href="#products">المنتجات</a>
-    </div>
 
     <div>
-      <h4>خدمة العملاء</h4>
-      <p>📞 07700000000</p>
-      <p>📧 support@souqi.com</p>
+
+      <h4>
+        روابط
+      </h4>
+
+      <a href="#">
+        الرئيسية
+      </a>
+
+      <a href="#products">
+        المنتجات
+      </a>
+
+    </div>
+
+
+    <div>
+
+      <h4>
+        خدمة العملاء
+      </h4>
+
+      <p>
+        📞 07839343073
+      </p>
+
+      <p>
+        📧 11akibs@gmail.com
+      </p>
+
     </div>
 
   </div>
 
   <div class="copyright">
+
     © 2026 سوقي - جميع الحقوق محفوظة
+
   </div>
 
 </footer>
 
 
-<script src="app.js"></script>
-<script>
-if ("serviceWorker" in navigator) {
-  window.addEventListener("load", function () {
-    navigator.serviceWorker.register("./service-worker.js");
-  });
-}
-</script>
 <!-- =========================
      نافذة الدعم
 ========================= -->
 
-<div class="modal" id="supportModal">
+<div
+  class="modal"
+  id="supportModal"
+>
+
   <div class="modal-content support-modal">
 
     <button
@@ -370,16 +683,23 @@ if ("serviceWorker" in navigator) {
     </button>
 
     <div class="support-header">
-      <div class="support-icon">💬</div>
 
-      <h2>مركز الدعم</h2>
+      <div class="support-icon">
+        💬
+      </div>
+
+      <h2>
+        مركز الدعم
+      </h2>
 
       <p>
         أهلاً بك في سوقي 👋
         <br>
         إذا تحتاج مساعدة، تواصل معنا مباشرة.
       </p>
+
     </div>
+
 
     <div class="support-options">
 
@@ -388,46 +708,92 @@ if ("serviceWorker" in navigator) {
         href="https://wa.me/9647839343073"
         target="_blank"
       >
-        <span>🟢</span>
+
+        <span>
+          🟢
+        </span>
+
         <div>
-          <strong>الدعم عبر واتساب</strong>
-          <small>07839343073</small>
+
+          <strong>
+            الدعم عبر واتساب
+          </strong>
+
+          <small>
+            07839343073
+          </small>
+
         </div>
+
       </a>
+
 
       <a
         class="support-option"
         href="mailto:11akibs@gmail.com"
       >
-        <span>📧</span>
+
+        <span>
+          📧
+        </span>
+
         <div>
-          <strong>البريد الإلكتروني</strong>
-          <small>11akibs@gmail.com</small>
+
+          <strong>
+            البريد الإلكتروني
+          </strong>
+
+          <small>
+            11akibs@gmail.com
+          </small>
+
         </div>
+
       </a>
+
 
       <a
         class="support-option"
         href="tel:07839343073"
       >
-        <span>📞</span>
+
+        <span>
+          📞
+        </span>
+
         <div>
-          <strong>اتصل بنا</strong>
-          <small>07839343073</small>
+
+          <strong>
+            اتصل بنا
+          </strong>
+
+          <small>
+            07839343073
+          </small>
+
         </div>
+
       </a>
 
     </div>
 
+
     <div class="support-message">
-      <strong>أوقات الدعم</strong>
+
+      <strong>
+        أوقات الدعم
+      </strong>
+
       <p>
         نحن نساعدك بخصوص الطلبات، المنتجات والتوصيل.
       </p>
+
     </div>
 
   </div>
+
 </div>
+
 
 <!-- زر الدعم العائم -->
 
@@ -439,7 +805,30 @@ if ("serviceWorker" in navigator) {
 >
   💬
 </button>
+
+
+<!-- Supabase يجب أن يكون قبل app.js -->
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script src="app.js"></script>
+
+
+<!-- Service Worker -->
+
+<script>
+
+if ("serviceWorker" in navigator) {
+
+  window.addEventListener("load", function () {
+
+    navigator.serviceWorker.register("./service-worker.js");
+
+  });
+
+}
+
+</script>
 
 </body>
 </html>

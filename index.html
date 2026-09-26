@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>سوقي | متجر إلكتروني</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<header class="header">
+  <div class="container header-content">
+
+    <a href="#" class="logo">
+      🛒 سوقي
+    </a>
+
+    <div class="search-box">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="ابحث عن منتج..."
+      >
+      <button onclick="searchProducts()">🔍</button>
+    </div>
+
+    <button class="cart-button" onclick="openCart()">
+      🛒 السلة
+      <b id="cartCount">0</b>
+    </button>
+
+  </div>
+</header>
+
+
+<main>
+
+<section class="hero">
+  <div class="container hero-content">
+
+    <div class="hero-text">
+      <span class="sale-badge">🔥 عروض خاصة</span>
+
+      <h1>
+        كل اللي تحتاجه
+        <br>
+        بمكان واحد
+      </h1>
+
+      <p>
+        تسوق منتجات مميزة بأسعار مناسبة
+        وتجربة سهلة وسريعة.
+      </p>
+
+      <button
+        class="primary-button"
+        onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})"
+      >
+        تسوق الآن
+      </button>
+    </div>
+
+    <div class="hero-image">
+      🛍️
+    </div>
+
+  </div>
+</section>
+
+
+<section class="categories-section">
+  <div class="container">
+
+    <h2>التصنيفات</h2>
+
+    <div class="categories">
+
+      <button
+        class="category active"
+        onclick="filterCategory('الكل', this)"
+      >
+        الكل
+      </button>
+
+      <button
+        class="category"
+        onclick="filterCategory('إلكترونيات', this)"
+      >
+        📱 إلكترونيات
+      </button>
+
+      <button
+        class="category"
+        onclick="filterCategory('ملابس', this)"
+      >
+        👕 ملابس
+      </button>
+
+      <button
+        class="category"
+        onclick="filterCategory('أحذية', this)"
+      >
+        👟 أحذية
+      </button>
+
+      <button
+        class="category"
+        onclick="filterCategory('إكسسوارات', this)"
+      >
+        🕶️ إكسسوارات
+      </button>
+
+      <button
+        class="category"
+        onclick="filterCategory('عطور', this)"
+      >
+        🌹 عطور
+      </button>
+
+    </div>
+
+  </div>
+</section>
+
+
+<section class="products-section" id="products">
+
+  <div class="container">
+
+    <div class="section-title">
+      <span>اكتشف منتجاتنا</span>
+      <h2>منتجات مميزة</h2>
+    </div>
+
+    <div
+      class="products-grid"
+      id="productsGrid"
+    ></div>
+
+  </div>
+
+</section>
+
+</main>
+
+
+<div
+  class="overlay"
+  id="overlay"
+  onclick="closeAll()"
+></div>
+
+
+<aside
+  class="cart-drawer"
+  id="cartDrawer"
+>
+
+  <div class="cart-header">
+
+    <h2>🛒 سلة المشتريات</h2>
+
+    <button onclick="closeCart()">✕</button>
+
+  </div>
+
+  <div
+    class="cart-items"
+    id="cartItems"
+  ></div>
+
+  <div class="cart-footer">
+
+    <div class="cart-total">
+      <span>المجموع</span>
+      <strong id="cartTotal">0 د.ع</strong>
+    </div>
+
+    <button
+      class="checkout-button"
+      onclick="openCheckout()"
+    >
+      إتمام الطلب
+    </button>
+
+  </div>
+
+</aside>
+
+
+<div
+  class="modal"
+  id="productModal"
+>
+
+  <div class="modal-content">
+
+    <button
+      class="close-modal"
+      onclick="closeProductModal()"
+    >
+      ✕
+    </button>
+
+    <div id="productDetails"></div>
+
+  </div>
+
+</div>
+
+
+<div
+  class="modal"
+  id="checkoutModal"
+>
+
+  <div class="modal-content checkout-content">
+
+    <button
+      class="close-modal"
+      onclick="closeCheckout()"
+    >
+      ✕
+    </button>
+
+    <h2>إتمام الطلب</h2>
+
+    <p>
+      أدخل معلومات التوصيل الخاصة بك
+    </p>
+
+    <form id="checkoutForm">
+
+      <label>الاسم الكامل</label>
+
+      <input
+        type="text"
+        id="customerName"
+        placeholder="مثال: حسين مصطفى"
+        required
+      >
+
+      <label>رقم الهاتف</label>
+
+      <input
+        type="tel"
+        id="customerPhone"
+        placeholder="07XXXXXXXXX"
+        required
+      >
+
+      <label>المحافظة</label>
+
+      <select id="customerCity" required>
+
+        <option value="">
+          اختر المحافظة
+        </option>
+
+        <option>بغداد</option>
+        <option>البصرة</option>
+        <option>نينوى</option>
+        <option>أربيل</option>
+        <option>كربلاء</option>
+        <option>النجف</option>
+        <option>ذي قار</option>
+        <option>ميسان</option>
+        <option>واسط</option>
+        <option>ديالى</option>
+        <option>الأنبار</option>
+        <option>صلاح الدين</option>
+        <option>بابل</option>
+        <option>القادسية</option>
+        <option>المثنى</option>
+        <option>كركوك</option>
+        <option>دهوك</option>
+        <option>السليمانية</option>
+
+      </select>
+
+      <label>العنوان بالتفصيل</label>
+
+      <textarea
+        id="customerAddress"
+        placeholder="المنطقة، الشارع، أقرب نقطة..."
+        required
+      ></textarea>
+
+      <button
+        type="submit"
+        class="checkout-button"
+      >
+        تأكيد الطلب
+      </button>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<div
+  class="toast"
+  id="toast"
+></div>
+
+
+<footer>
+
+  <div class="container footer-content">
+
+    <div>
+      <h3>🛒 سوقي</h3>
+      <p>
+        متجرك الإلكتروني البسيط والسريع.
+      </p>
+    </div>
+
+    <div>
+      <h4>روابط</h4>
+      <a href="#">الرئيسية</a>
+      <a href="#products">المنتجات</a>
+    </div>
+
+    <div>
+      <h4>خدمة العملاء</h4>
+      <p>📞 07700000000</p>
+      <p>📧 support@souqi.com</p>
+    </div>
+
+  </div>
+
+  <div class="copyright">
+    © 2026 سوقي - جميع الحقوق محفوظة
+  </div>
+
+</footer>
+
+
+<script src="app.js"></script>
+
+</body>
+</html>

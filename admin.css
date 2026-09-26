@@ -1,0 +1,343 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f6fa;
+  color: #222;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* تسجيل الدخول */
+
+.login-section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.login-box {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.login-logo {
+  font-size: 55px;
+  margin-bottom: 10px;
+}
+
+.login-box h1 {
+  margin: 5px 0;
+}
+
+.login-box p {
+  color: #777;
+}
+
+.login-box input {
+  width: 100%;
+  padding: 14px;
+  margin: 8px 0;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 16px;
+  direction: rtl;
+}
+
+.login-box button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  border: 0;
+  border-radius: 12px;
+  background: #6d4aff;
+  color: white;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.login-box a {
+  display: block;
+  margin-top: 20px;
+  color: #6d4aff;
+  text-decoration: none;
+}
+
+.message {
+  min-height: 22px;
+}
+
+/* لوحة الإدارة */
+
+.admin-header {
+  background: #151515;
+  color: white;
+  padding: 18px 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.admin-header h1 {
+  margin: 0 0 5px;
+}
+
+.admin-header span {
+  color: #bbb;
+  font-size: 13px;
+}
+
+.logout-btn {
+  background: #e53935;
+  color: white;
+  border: 0;
+  padding: 11px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.admin-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 25px;
+}
+
+/* الإحصائيات */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.stat-card {
+  background: white;
+  padding: 22px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+  text-align: center;
+}
+
+.stat-card span {
+  display: block;
+  font-size: 30px;
+}
+
+.stat-card strong {
+  display: block;
+  font-size: 28px;
+  margin: 5px 0;
+}
+
+/* الأقسام */
+
+.panel {
+  background: white;
+  padding: 20px;
+  border-radius: 18px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.panel-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.panel-title h2 {
+  margin: 0;
+}
+
+.panel-title button {
+  background: #6d4aff;
+  color: white;
+  border: 0;
+  padding: 11px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+/* نموذج المنتج */
+
+.form-box {
+  background: #f7f7fa;
+  padding: 18px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+}
+
+.form-box h3 {
+  margin-top: 0;
+}
+
+.form-box label {
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-box input,
+.form-box select,
+.form-box textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 15px;
+  background: white;
+}
+
+.form-box textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.form-buttons button {
+  flex: 1;
+  padding: 12px;
+  border: 0;
+  border-radius: 10px;
+  background: #6d4aff;
+  color: white;
+  cursor: pointer;
+}
+
+.form-buttons .cancel-btn {
+  background: #777;
+}
+
+/* القوائم */
+
+.items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item {
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-info strong {
+  display: block;
+  font-size: 17px;
+  margin-bottom: 5px;
+}
+
+.item-info small {
+  color: #777;
+}
+
+.item-actions {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.item-actions button {
+  border: 0;
+  padding: 9px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.edit-btn {
+  background: #eee;
+}
+
+.delete-btn {
+  background: #ffebee;
+  color: #d32f2f;
+}
+
+.stock-btn {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+
+/* الموبايل */
+
+@media (max-width: 700px) {
+
+  .admin-header {
+    padding: 15px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .logout-btn {
+    width: 100%;
+  }
+
+  .admin-container {
+    padding: 12px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    padding: 15px;
+  }
+
+  .panel-title {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .panel-title button {
+    width: 100%;
+  }
+
+  .item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .item-actions {
+    width: 100%;
+  }
+
+  .item-actions button {
+    flex: 1;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+  }
+}

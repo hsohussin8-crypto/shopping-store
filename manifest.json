@@ -1,0 +1,11 @@
+{
+  "name": "سوقي - متجر إلكتروني",
+  "short_name": "سوقي",
+  "description": "متجر إلكتروني لبيع المنتجات",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#6d4aff",
+  "orientation": "portrait-primary"
+}

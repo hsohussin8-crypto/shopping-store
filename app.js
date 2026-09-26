@@ -1,6 +1,13 @@
 // ===============================
-// متجر تسوق - app.js
+// سوقي - المتجر الإلكتروني
 // ===============================
+
+const STORE = {
+  name: "سوقي",
+  whatsapp: "9647839343073",
+  phone: "07839343073",
+  email: "11akibs@gmail.com"
+};
 
 const products = [
   {
@@ -14,7 +21,7 @@ const products = [
   {
     id: 2,
     name: "حذاء رياضي",
-    category: "أزياء",
+    category: "أحذية",
     price: 65000,
     image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80",
     description: "حذاء رياضي مريح وخفيف مناسب للمشي والرياضة."
@@ -30,7 +37,7 @@ const products = [
   {
     id: 4,
     name: "حقيبة جلد",
-    category: "أزياء",
+    category: "إكسسوارات",
     price: 110000,
     image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80",
     description: "حقيبة جلد أنيقة وعملية للاستخدام اليومي."
@@ -62,29 +69,19 @@ const products = [
   {
     id: 8,
     name: "قميص أنيق",
-    category: "أزياء",
+    category: "ملابس",
     price: 55000,
     image: "https://images.unsplash.com/photo-1603252109303-2751441dd157?auto=format&fit=crop&w=800&q=80",
     description: "قميص أنيق ومريح مناسب للإطلالات اليومية."
   }
 ];
 
-let cart = JSON.parse(localStorage.getItem("shoppingCart")) || [];
+let cart = JSON.parse(localStorage.getItem("shoppingCart") || "[]");
 
-const productGrid = document.querySelector("#productGrid");
-const cartItems = document.querySelector("#cartItems");
-const cartCount = document.querySelector("#cartCount");
-const cartTotal = document.querySelector("#cartTotal");
-const searchInput = document.querySelector("#searchInput");
+const $ = (selector) => document.querySelector(selector);
 
-
-// ===============================
-// تنسيق السعر
-// ===============================
-
-function formatPrice(price) {
-  return new Intl.NumberFormat("ar-IQ").format(price) + " د.ع";
-}
+const formatPrice = (price) =>
+  new Intl.NumberFormat("ar-IQ").format(price) + " د.ع";
 
 
 // ===============================
@@ -92,65 +89,77 @@ function formatPrice(price) {
 // ===============================
 
 function displayProducts(list = products) {
+  const grid = $("#productsGrid");
 
-  if (!productGrid) return;
+  if (!grid) return;
 
-  if (list.length === 0) {
-    productGrid.innerHTML = `
+  if (!list.length) {
+    grid.innerHTML = `
       <div class="empty-products">
+        <div>🔎</div>
         <h3>لم يتم العثور على منتجات</h3>
-        <p>جرب البحث عن منتج آخر.</p>
+        <p>جرب البحث بكلمة أخرى أو اختر تصنيفاً مختلفاً.</p>
       </div>
     `;
     return;
   }
 
-  productGrid.innerHTML = list.map(product => {
+  grid.innerHTML = list.map(product => `
+    <article class="product-card">
 
-    return `
-      <article class="product-card">
+      <div class="product-image">
+        <img
+          src="${product.image}"
+          alt="${product.name}"
+          loading="lazy"
+          onerror="this.style.display='none'; this.parentElement.classList.add('image-error');"
+        >
+      </div>
 
-        <div class="product-image">
-          <img 
-            src="${product.image}" 
-            alt="${product.name}"
-            loading="lazy"
-          >
-        </div>
+      <div class="product-info">
 
-        <div class="product-info">
+        <span class="product-category">
+          ${product.category}
+        </span>
 
-          <span class="product-category">
-            ${product.category}
-          </span>
+        <h3 class="product-name">
+          ${product.name}
+        </h3>
 
-          <h3>${product.name}</h3>
+        <p class="product-description">
+          ${product.description}
+        </p>
 
-          <p class="product-description">
-            ${product.description}
-          </p>
+        <div class="product-bottom">
 
-          <div class="product-bottom">
+          <strong class="product-price">
+            ${formatPrice(product.price)}
+          </strong>
 
-            <strong>
-              ${formatPrice(product.price)}
-            </strong>
+          <div class="product-actions">
 
-            <button 
-              class="add-to-cart"
+            <button
+              class="details-button"
+              onclick="showProductDetails(${product.id})"
+            >
+              تفاصيل
+            </button>
+
+            <button
+              class="add-button"
               onclick="addToCart(${product.id})"
             >
-              🛒 أضف للسلة
+              🛒 أضف
             </button>
 
           </div>
 
         </div>
 
-      </article>
-    `;
+      </div>
 
-  }).join("");
+    </article>
+  `).join("");
 }
 
 
@@ -159,7 +168,6 @@ function displayProducts(list = products) {
 // ===============================
 
 function addToCart(id) {
-
   const product = products.find(p => p.id === id);
 
   if (!product) return;
@@ -167,9 +175,8 @@ function addToCart(id) {
   const existing = cart.find(item => item.id === id);
 
   if (existing) {
-    existing.quantity++;
+    existing.quantity += 1;
   } else {
-
     cart.push({
       id: product.id,
       name: product.name,
@@ -177,7 +184,6 @@ function addToCart(id) {
       image: product.image,
       quantity: 1
     });
-
   }
 
   saveCart();
@@ -191,7 +197,6 @@ function addToCart(id) {
 // ===============================
 
 function saveCart() {
-
   localStorage.setItem(
     "shoppingCart",
     JSON.stringify(cart)
@@ -206,23 +211,22 @@ function saveCart() {
 // ===============================
 
 function updateCart() {
-
-  const totalQuantity = cart.reduce(
+  const count = cart.reduce(
     (sum, item) => sum + item.quantity,
     0
   );
 
-  const totalPrice = cart.reduce(
+  const total = cart.reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
 
-  if (cartCount) {
-    cartCount.textContent = totalQuantity;
+  if ($("#cartCount")) {
+    $("#cartCount").textContent = count;
   }
 
-  if (cartTotal) {
-    cartTotal.textContent = formatPrice(totalPrice);
+  if ($("#cartTotal")) {
+    $("#cartTotal").textContent = formatPrice(total);
   }
 
   renderCart();
@@ -234,55 +238,58 @@ function updateCart() {
 // ===============================
 
 function renderCart() {
+  const box = $("#cartItems");
 
-  if (!cartItems) return;
+  if (!box) return;
 
-  if (cart.length === 0) {
-
-    cartItems.innerHTML = `
+  if (!cart.length) {
+    box.innerHTML = `
       <div class="empty-cart">
         <div>🛒</div>
         <h3>السلة فارغة</h3>
-        <p>أضف بعض المنتجات للبدء.</p>
+        <p>أضف المنتجات التي تريد شراءها.</p>
       </div>
     `;
-
     return;
   }
 
-  cartItems.innerHTML = cart.map(item => {
+  box.innerHTML = cart.map(item => `
+    <div class="cart-item">
 
-    return `
-      <div class="cart-item">
+      <img
+        src="${item.image}"
+        alt="${item.name}"
+      >
 
-        <img 
-          src="${item.image}"
-          alt="${item.name}"
-        >
+      <div class="cart-item-info">
 
-        <div class="cart-item-info">
+        <div class="cart-item-name">
+          ${item.name}
+        </div>
 
-          <h4>${item.name}</h4>
+        <div class="cart-item-price">
+          ${formatPrice(item.price * item.quantity)}
+        </div>
 
-          <strong>
-            ${formatPrice(item.price)}
-          </strong>
+        <div class="quantity-controls">
 
-          <div class="quantity-controls">
+          <button
+            onclick="changeQuantity(${item.id}, 1)"
+          >
+            +
+          </button>
 
-            <button onclick="changeQuantity(${item.id}, 1)">
-              +
-            </button>
+          <span>
+            ${item.quantity}
+          </span>
 
-            <span>${item.quantity}</span>
+          <button
+            onclick="changeQuantity(${item.id}, -1)"
+          >
+            −
+          </button>
 
-            <button onclick="changeQuantity(${item.id}, -1)">
-              −
-            </button>
-
-          </div>
-
-          <button 
+          <button
             class="remove-item"
             onclick="removeFromCart(${item.id})"
           >
@@ -292,9 +299,9 @@ function renderCart() {
         </div>
 
       </div>
-    `;
 
-  }).join("");
+    </div>
+  `).join("");
 }
 
 
@@ -303,19 +310,14 @@ function renderCart() {
 // ===============================
 
 function changeQuantity(id, change) {
-
-  const item = cart.find(item => item.id === id);
+  const item = cart.find(i => i.id === id);
 
   if (!item) return;
 
   item.quantity += change;
 
   if (item.quantity <= 0) {
-
-    cart = cart.filter(
-      item => item.id !== id
-    );
-
+    cart = cart.filter(i => i.id !== id);
   }
 
   saveCart();
@@ -327,7 +329,6 @@ function changeQuantity(id, change) {
 // ===============================
 
 function removeFromCart(id) {
-
   cart = cart.filter(
     item => item.id !== id
   );
@@ -343,43 +344,22 @@ function removeFromCart(id) {
 // ===============================
 
 function searchProducts() {
-
-  const query = searchInput
-    ? searchInput.value.trim().toLowerCase()
-    : "";
+  const query = (
+    $("#searchInput")?.value || ""
+  ).trim().toLowerCase();
 
   if (!query) {
-
     displayProducts(products);
     return;
-
   }
 
-  const results = products.filter(product => {
-
-    return (
-      product.name.toLowerCase().includes(query) ||
-      product.category.toLowerCase().includes(query) ||
-      product.description.toLowerCase().includes(query)
-    );
-
-  });
-
-  displayProducts(results);
-}
-
-
-// ===============================
-// البحث أثناء الكتابة
-// ===============================
-
-if (searchInput) {
-
-  searchInput.addEventListener(
-    "input",
-    searchProducts
+  const results = products.filter(product =>
+    product.name.toLowerCase().includes(query) ||
+    product.category.toLowerCase().includes(query) ||
+    product.description.toLowerCase().includes(query)
   );
 
+  displayProducts(results);
 }
 
 
@@ -387,18 +367,22 @@ if (searchInput) {
 // التصنيفات
 // ===============================
 
-function filterCategory(category) {
+function filterCategory(category, button) {
 
-  if (category === "الكل") {
+  document
+    .querySelectorAll(".category")
+    .forEach(el => el.classList.remove("active"));
 
-    displayProducts(products);
-    return;
-
+  if (button) {
+    button.classList.add("active");
   }
 
-  const filtered = products.filter(
-    product => product.category === category
-  );
+  const filtered =
+    category === "الكل"
+      ? products
+      : products.filter(
+          product => product.category === category
+        );
 
   displayProducts(filtered);
 }
@@ -411,131 +395,143 @@ function filterCategory(category) {
 function showProductDetails(id) {
 
   const product = products.find(
-    product => product.id === id
+    p => p.id === id
   );
 
-  if (!product) return;
+  const modal = $("#productModal");
 
-  const modal = document.querySelector("#productModal");
+  const details = $("#productDetails");
 
-  if (!modal) return;
+  if (!product || !modal || !details) {
+    return;
+  }
 
-  modal.innerHTML = `
+  details.innerHTML = `
+    <div class="product-detail">
 
-    <div class="modal-content">
-
-      <button 
-        class="close-modal"
-        onclick="closeModal()"
-      >
-        ×
-      </button>
-
-      <img 
+      <img
         src="${product.image}"
         alt="${product.name}"
       >
 
-      <span>${product.category}</span>
+      <div>
 
-      <h2>${product.name}</h2>
+        <span class="product-category">
+          ${product.category}
+        </span>
 
-      <p>${product.description}</p>
+        <h2>
+          ${product.name}
+        </h2>
 
-      <h3>
-        ${formatPrice(product.price)}
-      </h3>
+        <p>
+          ${product.description}
+        </p>
 
-      <button 
-        class="add-to-cart"
-        onclick="addToCart(${product.id}); closeModal();"
-      >
-        🛒 أضف للسلة
-      </button>
+        <div class="price">
+          ${formatPrice(product.price)}
+        </div>
+
+        <button
+          class="add-button"
+          onclick="addToCart(${product.id}); closeProductModal();"
+        >
+          🛒 أضف للسلة
+        </button>
+
+      </div>
 
     </div>
-
   `;
 
-  modal.classList.add("active");
+  modal.classList.add("show");
 }
 
 
 // ===============================
-// إغلاق النافذة
+// إغلاق تفاصيل المنتج
 // ===============================
 
-function closeModal() {
-
-  const modal = document.querySelector("#productModal");
-
-  if (modal) {
-    modal.classList.remove("active");
-  }
-
+function closeProductModal() {
+  $("#productModal")?.classList.remove("show");
 }
 
 
 // ===============================
-// فتح وإغلاق السلة
+// فتح السلة
 // ===============================
 
 function openCart() {
 
-  const cartDrawer =
-    document.querySelector("#cartDrawer");
+  $("#cartDrawer")?.classList.add("open");
 
-  if (cartDrawer) {
-    cartDrawer.classList.add("active");
-  }
-
-}
-
-
-function closeCart() {
-
-  const cartDrawer =
-    document.querySelector("#cartDrawer");
-
-  if (cartDrawer) {
-    cartDrawer.classList.remove("active");
-  }
-
+  $("#overlay")?.classList.add("show");
 }
 
 
 // ===============================
-// صفحة الدفع
+// إغلاق السلة
+// ===============================
+
+function closeCart() {
+
+  $("#cartDrawer")?.classList.remove("open");
+
+  $("#overlay")?.classList.remove("show");
+}
+
+
+// ===============================
+// فتح الدفع
 // ===============================
 
 function openCheckout() {
 
-  if (cart.length === 0) {
-
+  if (!cart.length) {
     showToast("السلة فارغة");
     return;
-
   }
 
-  const checkout =
-    document.querySelector("#checkoutModal");
-
-  if (checkout) {
-    checkout.classList.add("active");
-  }
-
+  $("#checkoutModal")?.classList.add("show");
 }
 
 
+// ===============================
+// إغلاق الدفع
+// ===============================
+
 function closeCheckout() {
+  $("#checkoutModal")?.classList.remove("show");
+}
 
-  const checkout =
-    document.querySelector("#checkoutModal");
 
-  if (checkout) {
-    checkout.classList.remove("active");
-  }
+// ===============================
+// فتح الدعم
+// ===============================
 
+function openSupport() {
+  $("#supportModal")?.classList.add("show");
+}
+
+
+// ===============================
+// إغلاق الدعم
+// ===============================
+
+function closeSupport() {
+  $("#supportModal")?.classList.remove("show");
+}
+
+
+// ===============================
+// إغلاق كل النوافذ
+// ===============================
+
+function closeAll() {
+  closeCart();
+  closeCheckout();
+  closeProductModal();
+  closeSupport();
 }
 
 
@@ -547,40 +543,77 @@ function submitOrder(event) {
 
   event.preventDefault();
 
-  if (cart.length === 0) {
-
+  if (!cart.length) {
     showToast("السلة فارغة");
     return;
-
   }
 
-  const name =
-    document.querySelector("#customerName")?.value;
+  const name = (
+    $("#customerName")?.value || ""
+  ).trim();
 
-  const phone =
-    document.querySelector("#customerPhone")?.value;
+  const phone = (
+    $("#customerPhone")?.value || ""
+  ).trim();
 
-  const address =
-    document.querySelector("#customerAddress")?.value;
+  const city = (
+    $("#customerCity")?.value || ""
+  ).trim();
 
-  if (!name || !phone || !address) {
+  const address = (
+    $("#customerAddress")?.value || ""
+  ).trim();
 
-    showToast("يرجى ملء جميع المعلومات");
+  if (!name || !phone || !city || !address) {
+    showToast("يرجى إكمال معلومات التوصيل");
     return;
-
   }
+
+  const total = cart.reduce(
+    (sum, item) =>
+      sum + item.price * item.quantity,
+    0
+  );
 
   const orderNumber =
     "ORD-" +
     Date.now().toString().slice(-8);
 
-  console.log("طلب جديد:", {
-    orderNumber,
-    name,
-    phone,
-    address,
-    products: cart
-  });
+  const itemsText = cart.map(item =>
+    `• ${item.name} × ${item.quantity} = ${formatPrice(
+      item.price * item.quantity
+    )}`
+  ).join("\n");
+
+  const message =
+    `طلب جديد من متجر ${STORE.name}\n\n` +
+    `رقم الطلب: ${orderNumber}\n` +
+    `الاسم: ${name}\n` +
+    `الهاتف: ${phone}\n` +
+    `المحافظة: ${city}\n` +
+    `العنوان: ${address}\n\n` +
+    `المنتجات:\n${itemsText}\n\n` +
+    `المجموع: ${formatPrice(total)}`;
+
+  localStorage.setItem(
+    "lastOrder",
+    JSON.stringify({
+      orderNumber,
+      name,
+      phone,
+      city,
+      address,
+      items: cart,
+      total,
+      createdAt: new Date().toISOString()
+    })
+  );
+
+  const whatsappUrl =
+    "https://wa.me/" +
+    STORE.whatsapp +
+    "?text=" +
+    encodeURIComponent(message);
 
   cart = [];
 
@@ -590,41 +623,40 @@ function submitOrder(event) {
   closeCart();
 
   showToast(
-    `تم استلام طلبك بنجاح 🎉 رقم الطلب: ${orderNumber}`
+    "تم تجهيز الطلب، سيتم فتح واتساب لإرساله ✅"
   );
 
+  setTimeout(() => {
+    window.open(
+      whatsappUrl,
+      "_blank"
+    );
+  }, 700);
 }
 
 
 // ===============================
-// رسالة صغيرة
+// رسالة
 // ===============================
 
 function showToast(message) {
 
-  let toast =
-    document.querySelector("#toast");
+  const toast = $("#toast");
 
-  if (!toast) {
-
-    toast = document.createElement("div");
-
-    toast.id = "toast";
-
-    document.body.appendChild(toast);
-
-  }
+  if (!toast) return;
 
   toast.textContent = message;
 
   toast.classList.add("show");
 
-  setTimeout(() => {
+  clearTimeout(
+    window.__toastTimer
+  );
 
-    toast.classList.remove("show");
-
-  }, 3000);
-
+  window.__toastTimer =
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3200);
 }
 
 
@@ -640,6 +672,27 @@ document.addEventListener(
 
     updateCart();
 
+    $("#searchInput")?.addEventListener(
+      "input",
+      searchProducts
+    );
+
+    $("#checkoutForm")?.addEventListener(
+      "submit",
+      submitOrder
+    );
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if (event.key === "Escape") {
+          closeAll();
+        }
+
+      }
+    );
+
   }
 );
 
@@ -654,9 +707,12 @@ window.removeFromCart = removeFromCart;
 window.searchProducts = searchProducts;
 window.filterCategory = filterCategory;
 window.showProductDetails = showProductDetails;
-window.closeModal = closeModal;
+window.closeProductModal = closeProductModal;
 window.openCart = openCart;
 window.closeCart = closeCart;
 window.openCheckout = openCheckout;
 window.closeCheckout = closeCheckout;
+window.openSupport = openSupport;
+window.closeSupport = closeSupport;
+window.closeAll = closeAll;
 window.submitOrder = submitOrder;

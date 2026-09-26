@@ -13,7 +13,7 @@
   <title>متجري | متجر إلكتروني</title>
 
   <!-- =========================
-       حماية المتجر
+       Supabase
   ========================== -->
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -81,6 +81,10 @@
   </script>
 
 
+  <!-- =========================
+       الخط
+  ========================== -->
+
   <link
     rel="preconnect"
     href="https://fonts.googleapis.com"
@@ -97,10 +101,20 @@
     rel="stylesheet"
   >
 
+
+  <!-- =========================
+       CSS
+  ========================== -->
+
   <link
     rel="stylesheet"
     href="styles.css"
   >
+
+
+  <!-- =========================
+       PWA
+  ========================== -->
 
   <link
     rel="manifest"
@@ -135,17 +149,20 @@
     </a>
 
 
+    <!-- البحث -->
+
     <div class="search-box">
 
       <input
         type="text"
         id="searchInput"
         placeholder="ابحث عن منتج..."
+        autocomplete="off"
       >
 
       <button
         type="button"
-        onclick="searchProducts()"
+        onclick="searchProducts(document.getElementById('searchInput').value)"
       >
         🔍
       </button>
@@ -168,11 +185,16 @@
 
     <button
       class="cart-button"
-      onclick="openCart()"
       type="button"
+      onclick="openCart()"
     >
+
       🛒 السلة
-      <b id="cartCount">0</b>
+
+      <b id="cartCount">
+        0
+      </b>
+
     </button>
 
 
@@ -252,7 +274,10 @@
      التصنيفات
 ========================= -->
 
-<section class="categories-section">
+<section
+  class="categories-section"
+  id="categoriesSection"
+>
 
   <div class="container">
 
@@ -262,64 +287,26 @@
     </h2>
 
 
-    <div class="categories">
+    <!--
+      سيتم تحميل التصنيفات من Supabase
+      حسب sort_order
+    -->
 
+    <div
+      class="categories"
+      id="categoriesGrid"
+    >
 
       <button
         class="category active"
-        onclick="filterCategory('الكل', this)"
+        data-category="الكل"
         type="button"
       >
         الكل
       </button>
 
-
-      <button
-        class="category"
-        onclick="filterCategory('إلكترونيات', this)"
-        type="button"
-      >
-        📱 إلكترونيات
-      </button>
-
-
-      <button
-        class="category"
-        onclick="filterCategory('ملابس', this)"
-        type="button"
-      >
-        👕 ملابس
-      </button>
-
-
-      <button
-        class="category"
-        onclick="filterCategory('أحذية', this)"
-        type="button"
-      >
-        👟 أحذية
-      </button>
-
-
-      <button
-        class="category"
-        onclick="filterCategory('إكسسوارات', this)"
-        type="button"
-      >
-        🕶️ إكسسوارات
-      </button>
-
-
-      <button
-        class="category"
-        onclick="filterCategory('عطور', this)"
-        type="button"
-      >
-        🌹 عطور
-      </button>
-
-
     </div>
+
 
   </div>
 
@@ -345,11 +332,19 @@
       </span>
 
       <h2>
-        منتجات مميزة
+        المنتجات
       </h2>
 
     </div>
 
+
+    <!--
+      المنتجات المميزة يتم إنشاء قسمها
+      تلقائياً من app.js
+    -->
+
+
+    <!-- المنتجات -->
 
     <div
       class="products-grid"
@@ -372,7 +367,7 @@
 <div
   class="overlay"
   id="overlay"
-  onclick="closeAll()"
+  onclick="closeCart()"
 ></div>
 
 
@@ -430,7 +425,9 @@
       onclick="openCheckout()"
       type="button"
     >
+
       إتمام الطلب
+
     </button>
 
 
@@ -455,14 +452,18 @@
 
     <button
       class="close-modal"
-      onclick="closeProductModal()"
+      onclick="closeProductDetails()"
       type="button"
     >
+
       ✕
+
     </button>
 
 
-    <div id="productDetails"></div>
+    <div
+      id="productDetails"
+    ></div>
 
 
   </div>
@@ -476,218 +477,18 @@
 
 <div
   class="modal"
-  id="accountModal"
+  id="customerModal"
 >
 
 
-  <div class="modal-content account-content">
-
-
-    <button
-      class="close-modal"
-      onclick="closeAccount()"
-      type="button"
-    >
-      ✕
-    </button>
-
-
-    <!-- تسجيل الدخول -->
-
-    <div id="customerLogin">
-
-
-      <h2>
-        👤 تسجيل الدخول
-      </h2>
-
-
-      <p>
-        سجل دخولك حتى تتابع طلباتك وتحفظ بياناتك.
-      </p>
-
-
-      <input
-        type="email"
-        id="customerEmail"
-        placeholder="البريد الإلكتروني"
-        autocomplete="email"
-      >
-
-
-      <input
-        type="password"
-        id="customerPassword"
-        placeholder="كلمة المرور"
-        autocomplete="current-password"
-      >
-
-
-      <button
-        class="checkout-button"
-        onclick="customerLogin()"
-        type="button"
-      >
-        دخول
-      </button>
-
-
-      <p id="customerLoginMessage"></p>
-
-
-      <button
-        class="secondary-account-btn"
-        onclick="showRegister()"
-        type="button"
-      >
-        إنشاء حساب جديد
-      </button>
-
-
-    </div>
-
-
-    <!-- إنشاء حساب -->
-
-    <div
-      id="customerRegister"
-      style="display:none"
-    >
-
-
-      <h2>
-        📝 إنشاء حساب جديد
-      </h2>
-
-
-      <p>
-        أنشئ حسابك حتى تتابع طلباتك بسهولة.
-      </p>
-
-
-      <input
-        type="text"
-        id="registerName"
-        placeholder="الاسم الكامل"
-        autocomplete="name"
-      >
-
-
-      <input
-        type="email"
-        id="registerEmail"
-        placeholder="البريد الإلكتروني"
-        autocomplete="email"
-      >
-
-
-      <input
-        type="password"
-        id="registerPassword"
-        placeholder="كلمة المرور"
-        autocomplete="new-password"
-      >
-
-
-      <input
-        type="tel"
-        id="registerPhone"
-        placeholder="رقم الهاتف"
-        autocomplete="tel"
-      >
-
-
-      <input
-        type="text"
-        id="registerCity"
-        placeholder="المحافظة / المدينة"
-      >
-
-
-      <input
-        type="text"
-        id="registerAddress"
-        placeholder="العنوان بالتفصيل"
-      >
-
-
-      <button
-        class="checkout-button"
-        onclick="customerRegister()"
-        type="button"
-      >
-        إنشاء الحساب
-      </button>
-
-
-      <p id="customerRegisterMessage"></p>
-
-
-      <button
-        class="secondary-account-btn"
-        onclick="showLogin()"
-        type="button"
-      >
-        لدي حساب بالفعل
-      </button>
-
-
-    </div>
-
-
-    <!-- الحساب بعد تسجيل الدخول -->
-
-    <div
-      id="customerProfile"
-      style="display:none"
-    >
-
-
-      <h2>
-        👋 أهلاً بك
-      </h2>
-
-
-      <h3 id="customerProfileName"></h3>
-
-
-      <div class="account-actions">
-
-
-        <button
-          onclick="showCustomerOrders()"
-          type="button"
-        >
-          📦 طلباتي
-        </button>
-
-
-        <button
-          onclick="showCustomerData()"
-          type="button"
-        >
-          👤 بياناتي
-        </button>
-
-
-        <button
-          onclick="customerLogout()"
-          type="button"
-        >
-          🚪 تسجيل الخروج
-        </button>
-
-
-      </div>
-
-
-      <div
-        id="customerAccountDetails"
-      ></div>
-
-
-    </div>
-
+  <div
+    class="modal-content account-content"
+  >
+
+    <!--
+      app.js يملأ هذه النافذة
+      حسب حالة تسجيل الدخول.
+    -->
 
   </div>
 
@@ -714,7 +515,9 @@
       onclick="closeCheckout()"
       type="button"
     >
+
       ✕
+
     </button>
 
 
@@ -728,7 +531,10 @@
     </p>
 
 
-    <form id="checkoutForm">
+    <form
+      id="checkoutForm"
+      onsubmit="event.preventDefault(); submitOrder();"
+    >
 
 
       <label>
@@ -738,7 +544,7 @@
 
       <input
         type="text"
-        id="customerName"
+        id="checkoutName"
         placeholder="مثال: حسين مصطفى"
         required
       >
@@ -751,7 +557,7 @@
 
       <input
         type="tel"
-        id="customerPhone"
+        id="checkoutPhone"
         placeholder="07XXXXXXXXX"
         required
       >
@@ -763,15 +569,13 @@
 
 
       <select
-        id="customerCity"
+        id="checkoutCity"
         required
       >
-
 
         <option value="">
           اختر المحافظة
         </option>
-
 
         <option>بغداد</option>
         <option>البصرة</option>
@@ -792,7 +596,6 @@
         <option>دهوك</option>
         <option>السليمانية</option>
 
-
       </select>
 
 
@@ -802,17 +605,35 @@
 
 
       <textarea
-        id="customerAddress"
+        id="checkoutAddress"
         placeholder="المنطقة، الشارع، أقرب نقطة..."
         required
       ></textarea>
+
+
+      <select
+        id="checkoutPayment"
+      >
+
+        <option value="cash">
+          الدفع عند الاستلام
+        </option>
+
+      </select>
+
+
+      <div
+        id="checkoutMessage"
+      ></div>
 
 
       <button
         type="submit"
         class="checkout-button"
       >
+
         تأكيد الطلب
+
       </button>
 
 
@@ -846,7 +667,6 @@
 
     <div>
 
-
       <h3>
         🛒 متجري
       </h3>
@@ -856,12 +676,10 @@
         متجرك الإلكتروني البسيط والسريع.
       </p>
 
-
     </div>
 
 
     <div>
-
 
       <h4>
         روابط
@@ -877,12 +695,10 @@
         المنتجات
       </a>
 
-
     </div>
 
 
     <div>
-
 
       <h4>
         خدمة العملاء
@@ -897,7 +713,6 @@
       <p>
         📧 11akibs@gmail.com
       </p>
-
 
     </div>
 
@@ -925,7 +740,9 @@
 >
 
 
-  <div class="modal-content support-modal">
+  <div
+    class="modal-content support-modal"
+  >
 
 
     <button
@@ -933,7 +750,9 @@
       onclick="closeSupport()"
       type="button"
     >
+
       ×
+
     </button>
 
 
@@ -1052,7 +871,6 @@
 
     <div class="support-message">
 
-
       <strong>
         أوقات الدعم
       </strong>
@@ -1062,7 +880,6 @@
         نحن نساعدك بخصوص الطلبات، المنتجات والتوصيل.
       </p>
 
-
     </div>
 
 
@@ -1071,7 +888,9 @@
 </div>
 
 
-<!-- زر الدعم العائم -->
+<!-- =========================
+     زر الدعم العائم
+========================= -->
 
 <button
   class="support-floating"
@@ -1079,12 +898,14 @@
   type="button"
   aria-label="الدعم"
 >
+
   💬
+
 </button>
 
 
 <!-- =========================
-     App JavaScript
+     التطبيق
 ========================= -->
 
 <script src="app.js"></script>

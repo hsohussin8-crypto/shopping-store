@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>متجري | تسجيل الدخول</title>
+
+  <link
+    rel="preconnect"
+    href="https://fonts.googleapis.com"
+  >
+
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      min-height: 100%;
+    }
+
+    body {
+      font-family: "Cairo", sans-serif;
+      background:
+        radial-gradient(
+          circle at 15% 20%,
+          rgba(108, 76, 255, 0.18),
+          transparent 32%
+        ),
+        radial-gradient(
+          circle at 85% 80%,
+          rgba(108, 76, 255, 0.13),
+          transparent 32%
+        ),
+        linear-gradient(
+          135deg,
+          #f6f3ff,
+          #ffffff
+        );
+
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+
+      color: #222;
+    }
+
+    .login-page {
+      width: 100%;
+      min-height: 100vh;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 430px;
+
+      background: rgba(255, 255, 255, 0.97);
+
+      border: 1px solid rgba(108, 76, 255, 0.10);
+
+      border-radius: 28px;
+
+      padding: 34px 30px;
+
+      box-shadow:
+        0 25px 80px rgba(38, 25, 80, 0.14);
+
+      text-align: center;
+
+      animation: cardIn 0.45s ease;
+    }
+
+    @keyframes cardIn {
+
+      from {
+        opacity: 0;
+        transform: translateY(20px) scale(0.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+
+    }
+
+    .logo-box {
+      width: 78px;
+      height: 78px;
+
+      margin: 0 auto 12px;
+
+      border-radius: 23px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 39px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #6d4aff,
+          #8b70ff
+        );
+
+      box-shadow:
+        0 15px 35px rgba(109, 74, 255, 0.25);
+    }
+
+    .store-name {
+      font-size: 28px;
+      font-weight: 900;
+
+      color: #6d4aff;
+
+      margin-bottom: 5px;
+    }
+
+    .store-subtitle {
+      color: #888;
+
+      font-size: 14px;
+
+      margin-bottom: 28px;
+    }
+
+    .form-title {
+      font-size: 25px;
+
+      font-weight: 800;
+
+      margin: 0 0 7px;
+    }
+
+    .form-description {
+      color: #777;
+
+      font-size: 14px;
+
+      line-height: 1.8;
+
+      margin: 0 0 20px;
+    }
+
+    .input-group {
+      text-align: right;
+
+      margin-bottom: 12px;
+    }
+
+    .input-group label {
+      display: block;
+
+      font-size: 13px;
+
+      font-weight: 700;
+
+      margin-bottom: 6px;
+
+      color: #555;
+    }
+
+    input {
+      width: 100%;
+
+      height: 52px;
+
+      padding: 0 15px;
+
+      border-radius: 14px;
+
+      border: 1px solid #e2e0e9;
+
+      background: #fafafd;
+
+      outline: none;
+
+      font-family: inherit;
+
+      font-size: 14px;
+
+      transition:
+        border-color 0.2s,
+        box-shadow 0.2s,
+        background 0.2s;
+    }
+
+    input:focus {
+      border-color: #6d4aff;
+
+      background: #fff;
+
+      box-shadow:
+        0 0 0 4px
+        rgba(109, 74, 255, 0.08);
+    }
+
+    .main-button {
+      width: 100%;
+
+      height: 53px;
+
+      margin-top: 7px;
+
+      border: 0;
+
+      border-radius: 14px;
+
+      background:
+        linear-gradient(
+          135deg,
+          #6d4aff,
+          #856aff
+        );
+
+      color: white;
+
+      font-family: inherit;
+
+      font-size: 15px;
+
+      font-weight: 800;
+
+      cursor: pointer;
+
+      box-shadow:
+        0 12px 28px
+        rgba(109, 74, 255, 0.22);
+
+      transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+    }
+
+    .main-button:hover {
+      transform: translateY(-1px);
+
+      box-shadow:
+        0 15px 32px
+        rgba(109, 74, 255, 0.28);
+    }
+
+    .main-button:disabled {
+      opacity: 0.65;
+
+      cursor: not-allowed;
+
+      transform: none;
+    }
+
+    .secondary-button {
+      width: 100%;
+
+      height: 50px;
+
+      margin-top: 10px;
+
+      border: 1px solid #ddd7ff;
+
+      border-radius: 14px;
+
+      background: #f5f2ff;
+
+      color: #6242e5;
+
+      font-family: inherit;
+
+      font-size: 14px;
+
+      font-weight: 800;
+
+      cursor: pointer;
+    }
+
+    .message {
+      min-height: 25px;
+
+      margin: 9px 0 2px;
+
+      font-size: 13px;
+
+      line-height: 1.7;
+    }
+
+    .message.error {
+      color: #d93025;
+    }
+
+    .message.success {
+      color: #16803c;
+    }
+
+    .message.info {
+      color: #6d4aff;
+    }
+
+    .register-box {
+      display: none;
+    }
+
+    .back-login {
+      margin-top: 14px;
+
+      border: 0;
+
+      background: transparent;
+
+      color: #6d4aff;
+
+      font-family: inherit;
+
+      font-size: 13px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+    }
+
+    .security-note {
+      margin-top: 22px;
+
+      padding-top: 16px;
+
+      border-top: 1px solid #eee;
+
+      color: #999;
+
+      font-size: 12px;
+
+      line-height: 1.8;
+    }
+
+    @media (max-width: 480px) {
+
+      body {
+        padding: 12px;
+      }
+
+      .login-card {
+        padding: 27px 18px;
+
+        border-radius: 23px;
+      }
+
+      .logo-box {
+        width: 70px;
+        height: 70px;
+
+        font-size: 34px;
+      }
+
+      .store-name {
+        font-size: 25px;
+      }
+
+      .form-title {
+        font-size: 22px;
+      }
+
+    }
+
+  </style>
+</head>
+
+
+<body>
+
+  <main class="login-page">
+
+    <section class="login-card">
+
+      <div class="logo-box">
+        🛒
+      </div>
+
+      <div class="store-name">
+        متجري
+      </div>
+
+      <div class="store-subtitle">
+        متجرك الإلكتروني
+      </div>
+
+
+      <!-- =========================
+           تسجيل الدخول
+      ========================== -->
+
+      <div id="loginBox">
+
+        <h1 class="form-title">
+          أهلاً بك 👋
+        </h1>
+
+        <p class="form-description">
+          سجل دخولك حتى تدخل إلى متجري
+          وتبدأ التسوق.
+        </p>
+
+
+        <div class="input-group">
+
+          <label>
+            البريد الإلكتروني
+          </label>
+
+          <input
+            id="loginEmail"
+            type="email"
+            placeholder="example@email.com"
+            autocomplete="email"
+          >
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label>
+            كلمة المرور
+          </label>
+
+          <input
+            id="loginPassword"
+            type="password"
+            placeholder="كلمة المرور"
+            autocomplete="current-password"
+          >
+
+        </div>
+
+
+        <button
+          id="loginButton"
+          class="main-button"
+          type="button"
+          onclick="loginCustomer()"
+        >
+          تسجيل الدخول
+        </button>
+
+
+        <p
+          id="loginMessage"
+          class="message"
+        ></p>
+
+
+        <button
+          class="secondary-button"
+          type="button"
+          onclick="showRegister()"
+        >
+          📝 إنشاء حساب جديد
+        </button>
+
+      </div>
+
+
+      <!-- =========================
+           إنشاء حساب
+      ========================== -->
+
+      <div
+        id="registerBox"
+        class="register-box"
+      >
+
+        <h1 class="form-title">
+          إنشاء حساب 📝
+        </h1>
+
+        <p class="form-description">
+          أنشئ حسابك حتى تتمكن من استخدام
+          متجري ومتابعة طلباتك.
+        </p>
+
+
+        <div class="input-group">
+
+          <label>
+            الاسم الكامل
+          </label>
+
+          <input
+            id="registerName"
+            type="text"
+            placeholder="الاسم الكامل"
+            autocomplete="name"
+          >
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label>
+            البريد الإلكتروني
+          </label>
+
+          <input
+            id="registerEmail"
+            type="email"
+            placeholder="example@email.com"
+            autocomplete="email"
+          >
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label>
+            كلمة المرور
+          </label>
+
+          <input
+            id="registerPassword"
+            type="password"
+            placeholder="6 أحرف على الأقل"
+            autocomplete="new-password"
+          >
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label>
+            رقم الهاتف
+          </label>
+
+          <input
+            id="registerPhone"
+            type="tel"
+            placeholder="07XXXXXXXXX"
+            autocomplete="tel"
+          >
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label>
+            المحافظة / المدينة
+          </label>
+
+          <input
+            id="registerCity"
+            type="text"
+            placeholder="مثال: البصرة"
+          >
+
+        </div>
+
+
+        <div class="input-group">
+
+          <label>
+            العنوان
+          </label>
+
+          <input
+            id="registerAddress"
+            type="text"
+            placeholder="المنطقة والشارع"
+          >
+
+        </div>
+
+
+        <button
+          id="registerButton"
+          class="main-button"
+          type="button"
+          onclick="registerCustomer()"
+        >
+          إنشاء الحساب
+        </button>
+
+
+        <p
+          id="registerMessage"
+          class="message"
+        ></p>
+
+
+        <button
+          class="back-login"
+          type="button"
+          onclick="showLogin()"
+        >
+          ← لدي حساب بالفعل
+        </button>
+
+      </div>
+
+
+      <div class="security-note">
+        🔒 بيانات حسابك محفوظة بشكل آمن
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- Supabase -->
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+  ></script>
+
+
+  <script>
+
+    const SUPABASE_URL =
+      "https://jfazoorxmucevyeysdlg.supabase.co";
+
+    const SUPABASE_KEY =
+      "sb_publishable_POh-CGx30SGsdELDBUTbHg_0QZrPUHU";
+
+    const supabaseClient =
+      window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+      );
+
+
+    // =========================
+    // فحص الجلسة
+    // =========================
+
+    async function checkExistingSession() {
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth.getSession();
+
+
+        if (
+          !error &&
+          data &&
+          data.session
+        ) {
+
+          window.location.href =
+            "./index.html";
+
+        }
+
+      } catch (error) {
+
+        console.error(error);
+
+      }
+
+    }
+
+
+    // =========================
+    // تسجيل الدخول
+    // =========================
+
+    async function loginCustomer() {
+
+      const email =
+        document
+          .getElementById("loginEmail")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("loginPassword")
+          .value;
+
+
+      const message =
+        document.getElementById(
+          "loginMessage"
+        );
+
+      const button =
+        document.getElementById(
+          "loginButton"
+        );
+
+
+      if (
+        !email ||
+        !password
+      ) {
+
+        message.textContent =
+          "اكتب البريد الإلكتروني وكلمة المرور.";
+
+        message.className =
+          "message error";
+
+        return;
+
+      }
+
+
+      message.textContent =
+        "جاري تسجيل الدخول...";
+
+      message.className =
+        "message info";
+
+      button.disabled = true;
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth
+            .signInWithPassword({
+              email,
+              password
+            });
+
+
+        if (error) {
+
+          message.textContent =
+            "البريد الإلكتروني أو كلمة المرور غير صحيحة.";
+
+          message.className =
+            "message error";
+
+          button.disabled = false;
+
+          return;
+
+        }
+
+
+        message.textContent =
+          "تم تسجيل الدخول ✅";
+
+        message.className =
+          "message success";
+
+
+        setTimeout(
+          function () {
+
+            window.location.href =
+              "./index.html";
+
+          },
+          300
+        );
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+          "حدث خطأ أثناء تسجيل الدخول.";
+
+        message.className =
+          "message error";
+
+        button.disabled = false;
+
+      }
+
+    }
+
+
+    // =========================
+    // إنشاء الحساب
+    // =========================
+
+    async function registerCustomer() {
+
+      const name =
+        document
+          .getElementById("registerName")
+          .value
+          .trim();
+
+      const email =
+        document
+          .getElementById("registerEmail")
+          .value
+          .trim();
+
+      const password =
+        document
+          .getElementById("registerPassword")
+          .value;
+
+      const phone =
+        document
+          .getElementById("registerPhone")
+          .value
+          .trim();
+
+      const city =
+        document
+          .getElementById("registerCity")
+          .value
+          .trim();
+
+      const address =
+        document
+          .getElementById("registerAddress")
+          .value
+          .trim();
+
+
+      const message =
+        document.getElementById(
+          "registerMessage"
+        );
+
+      const button =
+        document.getElementById(
+          "registerButton"
+        );
+
+
+      if (
+        !name ||
+        !email ||
+        !password
+      ) {
+
+        message.textContent =
+          "يرجى إكمال الاسم والبريد وكلمة المرور.";
+
+        message.className =
+          "message error";
+
+        return;
+
+      }
+
+
+      if (
+        password.length < 6
+      ) {
+
+        message.textContent =
+          "كلمة المرور يجب أن تكون 6 أحرف على الأقل.";
+
+        message.className =
+          "message error";
+
+        return;
+
+      }
+
+
+      message.textContent =
+        "جاري إنشاء الحساب...";
+
+      message.className =
+        "message info";
+
+      button.disabled = true;
+
+
+      try {
+
+        const {
+          data,
+          error
+        } =
+          await supabaseClient.auth
+            .signUp({
+              email,
+              password
+            });
+
+
+        if (error) {
+
+          message.textContent =
+            error.message ||
+            "تعذر إنشاء الحساب.";
+
+          message.className =
+            "message error";
+
+          button.disabled = false;
+
+          return;
+
+        }
+
+
+        // حفظ بيانات الزبون مؤقتاً
+        // حتى نحفظها بعد تأكيد البريد
+        localStorage.setItem(
+          "pendingCustomerProfile",
+          JSON.stringify({
+            full_name: name,
+            phone: phone,
+            city: city,
+            address: address
+          })
+        );
+
+
+        // إذا Supabase سمح بالدخول مباشرة
+        if (
+          data &&
+          data.session &&
+          data.user
+        ) {
+
+          try {
+
+            await supabaseClient
+              .from("customer_profiles")
+              .upsert({
+                user_id: data.user.id,
+                full_name: name,
+                phone: phone,
+                city: city,
+                address: address
+              });
+
+            localStorage.removeItem(
+              "pendingCustomerProfile"
+            );
+
+          } catch (profileError) {
+
+            console.error(
+              profileError
+            );
+
+          }
+
+
+          message.textContent =
+            "تم إنشاء الحساب بنجاح ✅";
+
+          message.className =
+            "message success";
+
+
+          setTimeout(
+            function () {
+
+              window.location.href =
+                "./index.html";
+
+            },
+            500
+          );
+
+          return;
+
+        }
+
+
+        // إذا تأكيد البريد الإلكتروني مطلوب
+
+        message.textContent =
+          "تم إنشاء الحساب ✅ افتح بريدك الإلكتروني لتأكيد الحساب، وبعدها سجل الدخول.";
+
+        message.className =
+          "message success";
+
+        button.disabled = false;
+
+
+      } catch (error) {
+
+        console.error(error);
+
+        message.textContent =
+          "حدث خطأ أثناء إنشاء الحساب.";
+
+        message.className =
+          "message error";
+
+        button.disabled = false;
+
+      }
+
+    }
+
+
+    // =========================
+    // تبديل النوافذ
+    // =========================
+
+    function showRegister() {
+
+      document
+        .getElementById("loginBox")
+        .style.display = "none";
+
+      document
+        .getElementById("registerBox")
+        .style.display = "block";
+
+    }
+
+
+    function showLogin() {
+
+      document
+        .getElementById("registerBox")
+        .style.display = "none";
+
+      document
+        .getElementById("loginBox")
+        .style.display = "block";
+
+    }
+
+
+    // =========================
+    // Enter
+    // =========================
+
+    document.addEventListener(
+      "keydown",
+      function (event) {
+
+        if (
+          event.key !== "Enter"
+        ) {
+          return;
+        }
+
+        const loginVisible =
+          document
+            .getElementById("loginBox")
+            .style.display !== "none";
+
+
+        if (loginVisible) {
+
+          loginCustomer();
+
+        } else {
+
+          registerCustomer();
+
+        }
+
+      }
+    );
+
+
+    // =========================
+    // التشغيل
+    // =========================
+
+    checkExistingSession();
+
+  </script>
+
+</body>
+</html>

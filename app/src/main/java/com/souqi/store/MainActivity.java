@@ -19,32 +19,34 @@ public class MainActivity extends Activity {
 
         WebSettings settings = webView.getSettings();
 
+        // JavaScript
         settings.setJavaScriptEnabled(true);
+
+        // التخزين المحلي
         settings.setDomStorageEnabled(true);
+
+        // السماح بملفات التطبيق
         settings.setAllowFileAccess(true);
         settings.setAllowContentAccess(true);
 
-        webView.setWebViewClient(
-            new WebViewClient()
-        );
+        // تحسين عرض الموقع
+        settings.setJavaScriptCanOpenWindowsAutomatically(true);
+        settings.setSupportMultipleWindows(false);
 
-        // يبدأ التطبيق من شاشة تسجيل الدخول
-        webView.loadUrl(
-            "file:///android_asset/login.html"
-        );
+        // إبقاء الروابط داخل التطبيق
+        webView.setWebViewClient(new WebViewClient());
+
+        // فتح شاشة تسجيل الدخول
+        webView.loadUrl("file:///android_asset/login.html");
     }
 
     @Override
     public void onBackPressed() {
 
         if (webView.canGoBack()) {
-
             webView.goBack();
-
         } else {
-
             super.onBackPressed();
-
         }
     }
 }
